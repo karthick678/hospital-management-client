@@ -11,7 +11,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js', '.scss']
   },
 
   module: {
@@ -39,9 +39,9 @@ module.exports = {
         loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader?sourceMap' })
       },
       {
-        test: /\.css$/,
+        test: /\.scss$/,
         include: helpers.root('src', 'app'),
-        loader: 'raw-loader'
+        loaders: ['raw-loader', 'sass-loader']
       }
     ]
   },
