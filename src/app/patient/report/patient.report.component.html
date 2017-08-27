@@ -1,0 +1,24 @@
+<div class="patient-report-component">
+    <div>
+        <ul class="breadcrumb">
+            <li><a routerLink="/patient/list">Patients</a></li>
+            <li class="active">
+                <p><md-icon>chevron_right</md-icon>Ethel Price</p>
+            </li>
+        </ul>
+        <div class="float-right">
+            <button md-button routerLink="/patient/details/1">Edit</button>
+            <button md-button>Delete</button>
+            <button md-raised-button class="mat-primary" routerLink="/patient/details/new">New Patient</button>
+        </div>
+        <p class="clearfix"></p>
+    </div>
+    <md-tab-group>
+        <md-tab label="Basic Info">
+            <basic-info></basic-info>
+        </md-tab>
+        <md-tab label="Visits">
+            <visits></visits>
+        </md-tab>
+    </md-tab-group>
+</div>

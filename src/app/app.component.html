@@ -1,3 +1,26 @@
 <main>
-  
+    <md-sidenav-container class="page-sidenav-fab-container">
+        <!-- main menu -->
+        <md-sidenav #sidenav mode="side" opened="true" class="page-main-menu">
+            <img src="../assets/images/hm-logo.svg" class="branding" title="Hospial Management" />
+            <ul class="list-item">
+                <li>
+                    <a routerLink="/patient/list" class="active">
+                        <md-icon>perm_identity</md-icon>
+                        <p>Patient</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <md-icon>add_shopping_cart</md-icon>
+                        <p>Stack</p>
+                    </a>
+                </li>
+            </ul>
+        </md-sidenav>
+        <!-- page content -->
+        <div class="page-content">
+            <router-outlet></router-outlet>
+        </div>
+    </md-sidenav-container>
 </main>

@@ -1,0 +1,29 @@
+.patient-report-visit-component {
+    .panel-left {
+        margin: 0px 10px 10px 0px;
+        min-height: 100vh;
+        border-right: 1px solid #e0e0e0;
+        .visit-row {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            &.active, &:hover {
+                background: #e7e9f5;
+            }
+            .reason {
+                margin: 0 0 5px 0;
+                font-size: 14px;
+                color: #424242;
+            }
+            .date {
+                margin: 0 0 0px 0;
+                font-size: 10px;
+                color: #9e9e9e;
+                display: block;
+                line-height: 10px;
+            }
+        }
+    }
+    .panel-right {
+        padding: 10px;
+    }
+}

@@ -1,0 +1,41 @@
+<div class="patient-report-visit-component">
+    <div fxLayout fxLayout.xs="column">
+        <div fxFlex="230px" class="panel-left">
+            <div class="visit-row active">
+                <h5 class="reason">Fever</h5>
+                <span class="date">13/04/2017</span>
+            </div>
+            <div class="visit-row">
+                <h5 class="reason">Fever</h5>
+                <span class="date">13/04/2017</span>
+            </div>
+            <div class="visit-row">
+                <h5 class="reason">Fever</h5>
+                <span class="date">13/04/2017</span>
+            </div>
+
+        </div>
+        <div fxFlex="100%" class="panel-right">
+                <div fxLayout fxLayout.xs="column">
+                    <md-input-container fxFlex="100%">
+                        <textarea mdInput placeholder="Reason For Visit"></textarea>
+                    </md-input-container>
+                </div>
+                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                    <md-input-container fxFlex="33%">
+                        <input mdInput placeholder="Medician" value="">
+                    </md-input-container>
+                    <md-input-container fxFlex="33%">
+                        <input mdInput placeholder="Quantity" value="">
+                    </md-input-container>
+                    <md-input-container fxFlex="33%">
+                        <input mdInput placeholder="Description" value="">
+                    </md-input-container>
+                </div>
+                <div>
+                    <button md-raised-button class="mat-primary float-right">Add Madician</button>
+                    <p class="clearfix"></p>
+                </div>
+        </div>
+    </div>
+</div>

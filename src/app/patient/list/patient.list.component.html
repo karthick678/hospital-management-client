@@ -1,0 +1,26 @@
+<div class="patient-list-component">
+    <div>
+        <sub-header [title]="'Patients'" class="float-left"></sub-header>
+        <button md-raised-button class="float-right mat-primary" routerLink="/patient/details/new">New Patient</button>
+        <p class="clearfix"></p>
+    </div>
+    <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+        [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)='setPage($event)'>
+        <ngx-datatable-column name="Name">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                <a routerLink="/patient/report/{{row.id}}" title="{{row.name}}">{{row.name}}</a>
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Gender">
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Age">
+        </ngx-datatable-column>
+        <!-- <ngx-datatable-column name="Edit">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                <a routerLink="/patient/details/{{row.id}}" class="edit-button" title="{{row.name}}">
+                    <md-icon>mode_edit</md-icon>
+                </a>
+            </ng-template>
+        </ngx-datatable-column> -->
+    </ngx-datatable>
+</div>
