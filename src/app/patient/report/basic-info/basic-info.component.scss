@@ -1,4 +1,45 @@
-.avatar-icon {
-    font-size: 40px;
-    color: #267ed5;
+.patient-report-basic-info-component {
+    min-height: 100vh;
+    background: #f4f5f7;
+    padding: 20px 10px;
+    .profile-user-img {
+        margin: 0 auto;
+        width: 105px;
+        .mat-icon {
+            color: #3f51b5;
+            font-size: 100px;
+        }
+    }
+    .profile-user-name {
+        color: #0747a6;
+        font-size: 13px;
+        text-align: center;
+        margin: 0px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eaecf0;
+    }
+    .list-group {
+        padding-left: 0;
+        margin-bottom: 20px;
+        .list-group-item {
+            border-bottom: 1px solid #eaecf0;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            font-size: 13px;
+            b {
+                color: #5E6C84;
+                position: relative;
+                padding-left: 25px;
+                .mat-icon {
+                    position: absolute;
+                    left: 0px;
+                    font-size: 18px;
+                }
+            }
+            span {
+                color: #0747a6;
+                float: right;
+            }
+        }
+    }
 }

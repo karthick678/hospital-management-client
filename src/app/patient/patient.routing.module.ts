@@ -6,6 +6,7 @@ import { PatientComponent } from './patient.component';
 import { PatientListComponent } from './list/patient.list.component';
 import { PatientDetailsComponent } from './details/patient.details.component';
 import { PatientReportComponent } from './report/patient.report.component';
+import { PatientCheckupComponent } from './checkup/patient.checkup.component';
 
 const patientRoutes: Routes = [
     {
@@ -15,7 +16,8 @@ const patientRoutes: Routes = [
             { path: '', redirectTo: 'list', pathMatch: 'full' },
             { path: 'list', component: PatientListComponent },
             { path: 'details/:id', component: PatientDetailsComponent },
-            { path: 'report/:id', component: PatientReportComponent }
+            { path: 'report/:id', component: PatientReportComponent },
+            { path: 'checkup/:id', component: PatientCheckupComponent }
         ]
     }
 ];

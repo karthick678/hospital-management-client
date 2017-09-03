@@ -7,4 +7,6 @@ export class Page {
     totalPages: number = 0;
     //The current page number
     pageNumber: number = 0;
+    // Search Text is array of object
+    query: any;
 }

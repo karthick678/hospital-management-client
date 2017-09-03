@@ -1,0 +1,85 @@
+<div class="patient-checkup-component">
+    <ul class="breadcrumb">
+        <li><a class="atag" routerLink="/patient/list">Patients</a>
+            <md-icon>chevron_right</md-icon>
+        </li>
+        <li><a class="atag" routerLink="/patient/report">Report</a>
+            <md-icon>chevron_right</md-icon>
+        </li>
+        <li>
+            <p>New Checkup</p>
+        </li>
+    </ul>
+    <button md-raised-button class="float-right mat-primary" routerLink="/patient/details/new">New Patient</button>
+    <p class="clearfix"></p>
+    <form (ngSubmit)="onSubmit()">
+        <h4>Checkup</h4>
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <md-select placeholder="Doctor" class="field-doctor-name" fxFlex="33%" [(ngModel)]="checkup.doctorName" name="doctorName">
+                <md-option *ngFor="let doctor of doctorList" [value]="doctor.value">
+                    {{ doctor.viewValue }}
+                </md-option>
+            </md-select>
+            <md-input-container fxFlex="33%">
+                <input mdInput [mdDatepicker]="picker" placeholder="Checkup Date" [(ngModel)]="checkup.checkupDate" name="checkupDate">
+                <button mdSuffix [mdDatepickerToggle]="picker"></button>
+            </md-input-container>
+            <md-datepicker #picker></md-datepicker>
+        </div>
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <md-input-container fxFlex="33%">
+                <textarea mdInput placeholder="Symptoms" [(ngModel)]="checkup.symptoms" name="symptoms"></textarea>
+            </md-input-container>
+            <md-input-container fxFlex="33%">
+                <textarea mdInput placeholder="Diagnosis" [(ngModel)]="checkup.diagnosis" name="diagnosis"></textarea>
+            </md-input-container>
+        </div>
+        <h4>Prescription</h4>
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <div fxFlex="20%">Medicine</div>
+            <div fxFlex="20%">No.of Days</div>
+            <div fxFlex="20%">When to take</div>
+            <div fxFlex="150px">Before Meal?</div>
+            <div fxFlex="150px">Delete</div>
+        </div>
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" *ngFor="let item of checkup.prescription">
+            <md-input-container fxFlex="20%">
+                <input type="text" mdInput [(ngModel)]="item.medication" name="medication">
+            </md-input-container>
+            <md-input-container fxFlex="20%">
+                <input mdInput [(ngModel)]="item.noOfDays" name="noOfDays">
+            </md-input-container>
+            <md-input-container fxFlex="20%">
+                <input mdInput [(ngModel)]="item.whenToTake" name="whenToTake">
+            </md-input-container>
+            <div fxFlex="150px" class="field-before-meal">
+                <md-checkbox [(ngModel)]="item.beforeMeal" name="beforeMeal"></md-checkbox>
+            </div>
+            <div fxFlex="150px" class="field-delete">
+                <a class="atag">
+                    <md-icon>delete_forever</md-icon>
+                </a>
+            </div>
+        </div>
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <div fxFlex="60%">
+            </div>
+            <div fxFlex="230px">
+                <button md-raised-button class="float-right mat-primary">New Medicine</button>
+            </div>
+        </div>
+        <h4>ExtraNotes</h4>
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <md-input-container fxFlex="100%">
+                <textarea mdInput placeholder="Symptoms" [(ngModel)]="checkup.symptoms" name="symptoms"></textarea>
+            </md-input-container>
+        </div>
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <div fxFlex="67%"></div>
+            <div fxFlex="33%" class="text-right">
+                <a md-raised-button routerLink="/patient/list">Cancel</a>
+                <button md-raised-button class="mat-primary" type="submit">Save</button>
+            </div>
+        </div>
+    </form>
+</div>

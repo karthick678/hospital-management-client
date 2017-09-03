@@ -4,23 +4,55 @@
         <button md-raised-button class="float-right mat-primary" routerLink="/patient/details/new">New Patient</button>
         <p class="clearfix"></p>
     </div>
-    <ngx-datatable class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
+    <form (ngSubmit)="onSubmit()">
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <div fxFlex="33%"></div>
+            <md-select fxFlex="33%" class="field-search" [(ngModel)]="searchAttribute" name="gender">
+                <md-option *ngFor="let list of searchList" [value]="list.value">
+                    {{ list.viewValue }}
+                </md-option>
+            </md-select>
+            <md-input-container fxFlex="33%">
+                <input type="text" mdInput [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}">
+                <md-icon mdSuffix>search</md-icon>
+            </md-input-container>
+        </div>
+    </form>
+    <ngx-datatable class="material striped" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
         [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)='setPage($event)'>
         <ngx-datatable-column name="Name">
             <ng-template let-row="row" ngx-datatable-cell-template>
-                <a routerLink="/patient/report/{{row.id}}" title="{{row.name}}">{{row.name}}</a>
+                <a class="atag" routerLink="/patient/report/{{row._id}}" title="{{row.name}}">
+                    {{row.name.first}} {{row.name.middle}} {{row.name.last}}
+                </a>
             </ng-template>
         </ngx-datatable-column>
         <ngx-datatable-column name="Gender">
-        </ngx-datatable-column>
-        <ngx-datatable-column name="Age">
-        </ngx-datatable-column>
-        <!-- <ngx-datatable-column name="Edit">
             <ng-template let-row="row" ngx-datatable-cell-template>
-                <a routerLink="/patient/details/{{row.id}}" class="edit-button" title="{{row.name}}">
+                {{row.gender}}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Mobile Number">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.mobileNumber}}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="City">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.address.city}}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Blood Group">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.bloodGroup}}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Edit">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                <a class="atag" routerLink="/patient/details/{{row._id}}" title="Edit">
                     <md-icon>mode_edit</md-icon>
                 </a>
             </ng-template>
-        </ngx-datatable-column> -->
+        </ngx-datatable-column>
     </ngx-datatable>
 </div>

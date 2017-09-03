@@ -20,7 +20,7 @@ body {
 body {
   color: #172B4D;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 1.42857142857143;
@@ -32,7 +32,16 @@ body {
       background: #3f51b5;
       color: #FFFFFF;
     }
-    a {
+    .mat-raised-button.mat-info {
+      background: #2096f3;
+      color: #FFFFFF;
+    }
+    .list-unstyle {
+      li {
+        list-style: none;
+      }
+    }
+    .atag {
       color: #0052CC;
       text-decoration: none;
       &:hover {
@@ -54,6 +63,19 @@ body {
     }
     .ngx-datatable.material {
       box-shadow: none;
+      .datatable-body-row:hover {
+        background: transparent !important;
+      }
+      .datatable-row-group {
+        background: transparent !important;
+      }
+      .datatable-row-odd:hover {
+        background: #EEEEEE !important;
+      }
+    }
+    .mat-button,
+    .mat-raised-button {
+      background: #EEEEEE;
     }
     .breadcrumb {
       padding-left: 0px;
@@ -62,19 +84,17 @@ body {
       height: 50px;
       float: left;
       li {
+        position: relative;
         display: inline-block;
+        padding-right: 5px;
+        .mat-icon {
+          position: absolute;
+          font-size: 15px;
+          top: 4px;
+          right: -10px;
+        }
         a {
           padding-right: 15px;
-        }
-        p {
-          position: relative;
-          margin-left: 5px;
-          .mat-icon {
-            position: absolute;
-            font-size: 15px;
-            left: -20px;
-            top: 4px;
-          }
         }
       }
     }

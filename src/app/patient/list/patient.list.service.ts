@@ -1,32 +1,23 @@
 import { Injectable } from "@angular/core";
+import { Http } from '@angular/http';
 import { Observable } from "rxjs";
-var companyData = [
-    {
-        "id": 1,
-        "name": "Ethel Price",
-        "gender": "female",
-        "company": "Johnson, Johnson and Partners, LLC CMP DDC",
-        "age": 22
-    },
-    {
-        "id": 2,
-        "name": "Claudine Neal",
-        "gender": "female",
-        "company": "Sealoud",
-        "age": 55
-    },
-    {
-        "id": 3,
-        "name": "Beryl Rice",
-        "gender": "female",
-        "company": "Velity",
-        "age": 67
-    }
-];
+import 'rxjs/add/operator/map';
+
+import { Page } from '../shared/page.model';
+import { Patient } from '../shared/patient.model';
+import { AppSettings } from '../../app.settings';
 
 @Injectable()
 export class PatientListService {
-    public getPatients() {
-        return companyData;
+    constructor(private http: Http) {
+
+    }
+    getPatients(page: Page): Observable<Patient[]> {
+        return this.http.post(AppSettings.API_ENDPOINT + '/getPatients', {
+            page: page.pageNumber,
+            limit: page.size,
+            query: page.query
+        })
+        .map((res) => res.json());
     }
 }
