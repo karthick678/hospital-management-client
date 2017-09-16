@@ -1,0 +1,37 @@
+.medicine-submenu-component {
+    min-height: 100vh;
+    background: #f4f5f7;
+    padding: 10px;
+    .list {
+        margin: 0px;
+        padding: 0px;
+        .list-group-item {
+            a {
+                display: block;
+                text-decoration: none;
+                padding: 10px;
+                color: #5E6C84;
+                position: relative;
+                font-weight: 600;
+                cursor: pointer;
+                &.active,
+                &:hover,
+                &:focus {
+                    background: #e2e5ea;
+                }
+                &.active {
+                    color: #3f51b5;
+                }
+                .mat-icon {
+                    position: absolute;
+                    left: 10px;
+                    top: 9px;
+                    font-size: 22px;
+                }
+                span {
+                    margin-left: 30px;
+                }
+            }
+        }
+    }
+}

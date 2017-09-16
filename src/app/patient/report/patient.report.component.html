@@ -1,0 +1,24 @@
+<div class="patient-report-component">
+    <div>
+        <ul class="breadcrumb">
+            <li><a class="atag" routerLink="/patient/list">Patients</a><md-icon>chevron_right</md-icon></li>
+            <li class="active">
+                <p>{{patientName}}</p>
+            </li>
+        </ul>
+        <div class="float-right">
+            <button md-button routerLink="/patient/details/{{id}}">Edit</button>
+            <button md-button>Delete</button>
+            <button md-raised-button class="mat-primary" routerLink="/patient/details/new">New Patient</button>
+        </div>
+        <p class="clearfix"></p>
+    </div>
+    <div fxLayout fxLayout.xs="column" fxLayoutGap="20px">
+        <div fxFlex="260px">
+            <basic-info [patient]="patient"></basic-info>
+        </div>
+        <div fxFlex="100%">
+            <visits [checkup]="checkup" [page]="page" [patientId]="patientId" (getCheckups)="getCheckups($event)" (deleteCheckup)="deleteCheckup($event)"></visits>
+        </div>
+    </div>
+</div>

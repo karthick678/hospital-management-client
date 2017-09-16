@@ -1,0 +1,96 @@
+.patient-report-visit-component {
+    .time-line {
+        .datatable-row-odd:hover {
+            background: none !important;
+        }
+    }
+    .timeline {
+        margin: 5px 0px -48px 0px;
+        padding: 0px;
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #ddd;
+            left: 31px;
+            margin: 0;
+            border-radius: 2px;
+        }
+        li {
+            position: relative;
+            margin-right: 10px;
+            margin-bottom: 15px;
+            &.time-label {
+                .time-label-button {
+                    float: right;
+                    background: none;
+                    border: 0px;
+                    button {
+                        margin-left: 10px;
+                        min-width: 44px;
+                    }
+                }
+            }
+            span {
+                padding: 5px;
+                background: #eee;
+                border: 1px solid #ddd;
+                font-size: 13px;
+                margin-right: 10px;
+                border-radius: 4px;
+            }
+            .timeline-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 15px;
+                line-height: 30px;
+                position: absolute;
+                color: #666;
+                background: #d2d6de;
+                border-radius: 50%;
+                text-align: center;
+                left: 18px;
+                top: 0;
+            }
+            .timeline-item {
+                border-radius: 3px;
+                margin-top: 0;
+                color: #444;
+                margin-left: 60px;
+                margin-right: 15px;
+                padding: 0;
+                position: relative;
+                &.extra-note {
+                    padding-bottom: 20px;
+                }
+                .timeline-header {
+                    margin: 0;
+                    font-size: 14px;
+                    color: #555;
+                    padding: 10px;
+                }
+                .timeline-body {
+                    padding: 10px 15px;
+                    background: #f2f4f8;
+                    margin-left: 10px;
+                    border-radius: 5px;
+                    table {
+                        width: 100%;
+                        max-width: 100%;
+                        thead th {
+                            border-bottom: 1px solid #eaecf0;
+                            padding: 5px;
+                            color: #5e6c84;
+                        }
+                        tbody td {
+                            line-height: 0.3;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

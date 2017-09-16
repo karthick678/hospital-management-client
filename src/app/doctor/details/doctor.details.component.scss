@@ -1,0 +1,23 @@
+.doctor-details-component {
+    .field-gender {
+        margin-top: 15px;
+    }
+    .profile-user-img {
+        margin: 0 auto;
+        width: 105px;
+        .mat-icon {
+            color: #3f51b5;
+            font-size: 100px;
+        }
+    }
+    .field-status {
+        color: #5E6C84;
+        font-size: 13px;
+        text-align: center;
+        margin: 0px;
+        padding-bottom: 10px;
+        p {
+            margin-top: 0px;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+import { Injectable } from "@angular/core";
+import { Http } from '@angular/http';
+import { Observable } from "rxjs";
+import 'rxjs/add/operator/map';
+
+import { Checkup } from '../shared/checkup.model';
+import { AppSettings } from '../../app.settings';
+
+@Injectable()
+export class PatientCheckupComponentService {
+
+    constructor(private http: Http) {
+    }
+
+    sampleCheckup() {
+        let checkup = {
+            _id: '',
+            patientId: '',
+            doctorName: '',
+            checkupDate: '',
+            diagnosis: '',
+            symptoms: '',
+            prescription: [{
+                medicine: '',
+                noOfDays: 0,
+                whenToTake: '',
+                beforeMeal: false,
+            }],
+            extraNotes: ''
+        };
+        return checkup;
+    }
+
+    createCheckupDetails(checkup: Checkup): Observable<Checkup> {
+        return this.http.post(AppSettings.API_ENDPOINT + '/createCheckupDetails', checkup)
+            .map((res) => res.json());
+    }
+
+    updatePatientDetails(checkup: Checkup): Observable<Checkup> {
+        return this.http.put(AppSettings.API_ENDPOINT + '/updateCheckupDetails/' + checkup._id, checkup)
+            .map((res) => res.json());
+    }
+
+    getCheckupDetails(id: string): Observable<Checkup> {
+        return this.http.get(AppSettings.API_ENDPOINT + '/getCheckupDetails/' + id)
+            .map((res) => res.json());
+    }
+
+}
