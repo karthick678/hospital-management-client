@@ -1,15 +1,17 @@
 export class Checkup {
     _id: string = '';
+    patientId: String = '';
     doctorName: string = '';
     symptoms: string = '';
     diagnosis: string = '';
     checkupDate: string = '';
     prescription: Prescription[];
+    extraNotes: string = '';
 }
 
-export class  Prescription {
-    medication: string;
-    noOfDays: string;
+class  Prescription {
+    medicine: string;
+    noOfDays: number;
     whenToTake: string;
-    beforeMeal: string;
+    beforeMeal: boolean;
 }

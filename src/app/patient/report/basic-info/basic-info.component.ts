@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { Patient } from './../../shared/patient.model';
 
 @Component({
     selector: 'basic-info',
@@ -7,5 +9,5 @@ import { Component } from '@angular/core';
 })
 
 export class PatientReportBasicInfoComponent {
-
+    @Input() patient: Patient;
 }

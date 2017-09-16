@@ -1,100 +1,98 @@
 <div class="patient-report-visit-component">
     <div>
-        <sub-header [title]="'Checkup History'" class="float-left"></sub-header>
-        <button md-raised-button class="float-right mat-info" routerLink="/patient/details/new">New Checkup</button>
-        <p class="clearfix"></p>
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <div fxFlex="100%">
+                <sub-header [title]="'Checkup History'" class="float-left"></sub-header>
+            </div>
+             <md-select fxFlex="100px" class="field-search" [(ngModel)]="page.size" name="pageSize" (change)="getCheckupss({ offset: 0 })">
+                <md-option *ngFor="let list of pageSizeList" [value]="list.value">
+                    {{ list.name }}
+                </md-option>
+            </md-select> 
+            <div fxFlex="150px">
+                <button md-raised-button class="float-right mat-info" routerLink="/patient/checkup/{{patientId}}/new">New Checkup</button>
+            </div>
+        </div>
     </div>
-    <ul class="timeline list-unstyle">
-        <li class="time-label">
-            <span>
-                02 Sep 2017
+
+    <ngx-datatable class="material" [rows]="checkup" [columns]="columns" [columnMode]="'force'" [footerHeight]="50" [headerHeight]="0"
+        [rowHeight]="'auto'" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size"
+        (page)='getCheckupss($event)' [rowClass]="getRowClass">
+    </ngx-datatable>
+
+    <ng-template #editTmpl let-row="row" let-value="value">
+        <ul class="timeline list-unstyle">
+            <li class="time-label">
+                <span>
+                {{row.checkupDate  | date: 'dd-MMM-yyyy'}} 
             </span>
-            <span>
-                Doctor : Glory Culzer
+                <span>
+                Doctor : {{row.doctorName}}
             </span>
-            <span class="time-label-button">
-                <button md-button  routerLink="/patient/checkup/new"><md-icon>edit</md-icon></button>
-                <button md-button><md-icon>delete_forever</md-icon></button>
+                <span class="time-label-button">
+                <button md-button routerLink="/patient/checkup/{{row.patientId}}/{{row._id}}"><md-icon>edit</md-icon></button>
+                <button md-button (click)="openmdDialog(row)"><md-icon>delete_forever</md-icon></button>
             </span>
-        </li>
-        <li>
-            <md-icon class="timeline-icon">accessibility</md-icon>
-            <div class="timeline-item">
-                <h4 class="timeline-header">Symptoms</h4>
-                <div class="timeline-body">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing
-                    and typesetting industry
+            </li>
+            <li>
+                <md-icon class="timeline-icon">accessibility</md-icon>
+                <div class="timeline-item">
+                    <h4 class="timeline-header">Symptoms</h4>
+                    <div class="timeline-body">
+                        {{row.symptoms}}
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li>
-            <md-icon class="timeline-icon">format_color_fill</md-icon>
-            <div class="timeline-item">
-                <h4 class="timeline-header">Diagnosis</h4>
-                <div class="timeline-body">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing
-                    and typesetting industry
+            </li>
+            <li>
+                <md-icon class="timeline-icon">format_color_fill</md-icon>
+                <div class="timeline-item">
+                    <h4 class="timeline-header">Diagnosis</h4>
+                    <div class="timeline-body">
+                        {{row.diagnosis}}
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li>
-            <md-icon class="timeline-icon">add_shopping_cart</md-icon>
-            <div class="timeline-item">
-                <h4 class="timeline-header">Prescription</h4>
-                <div class="timeline-body">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Medicine</th>
-                                <th>No.Of Days</th>
-                                <th>When to Take</th>
-                                <th>Before Meal?</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Metformin</td>
-                                <td>2</td>
-                                <td>1-1-1</td>
-                                <td>Yes</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Metformin</td>
-                                <td>2</td>
-                                <td>1-1-1</td>
-                                <td>Yes</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Metformin</td>
-                                <td>2</td>
-                                <td>1-1-1</td>
-                                <td>Yes</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Metformin</td>
-                                <td>2</td>
-                                <td>1-1-1</td>
-                                <td>Yes</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </li>
+            <li>
+                <md-icon class="timeline-icon">add_shopping_cart</md-icon>
+                <div class="timeline-item">
+                    <h4 class="timeline-header">Prescription</h4>
+                    <div class="timeline-body">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Medicine</th>
+                                    <th>No.Of Days</th>
+                                    <th>When to Take</th>
+                                    <th>Before Meal?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of row.prescription; let key = index">
+                                    <td>{{key + 1}}</td>
+                                    <td>{{item.medicine}}</td>
+                                    <td>{{item.noOfDays}}</td>
+                                    <td>{{item.whenToTake}}</td>
+                                    <td>
+                                        <p *ngIf="item.beforeMeal">Yes</p>
+                                        <p *ngIf="!item.beforeMeal">No</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li>
-            <md-icon class="timeline-icon">event_note</md-icon>
-            <div class="timeline-item">
-                <h4 class="timeline-header">Extra Note</h4>
-                <div class="timeline-body">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing
-                    and typesetting industry
+            </li>
+            <li>
+                <md-icon class="timeline-icon">event_note</md-icon>
+                <div class="timeline-item extra-note">
+                    <h4 class="timeline-header">Extra Note</h4>
+                    <div class="timeline-body">
+                        {{row.extraNotes}}
+                    </div>
                 </div>
-            </div>
-        </li>
-    </ul>
+            </li>
+        </ul>
+        <p class="clearfix"></p>
+    </ng-template>
 </div>

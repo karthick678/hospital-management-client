@@ -3,7 +3,7 @@
         <ul class="breadcrumb">
             <li><a class="atag" routerLink="/patient/list">Patients</a><md-icon>chevron_right</md-icon></li>
             <li class="active">
-                <p>Ethel Price</p>
+                <p>{{patientName}}</p>
             </li>
         </ul>
         <div class="float-right">
@@ -15,10 +15,10 @@
     </div>
     <div fxLayout fxLayout.xs="column" fxLayoutGap="20px">
         <div fxFlex="260px">
-            <basic-info></basic-info>
+            <basic-info [patient]="patient"></basic-info>
         </div>
         <div fxFlex="100%">
-            <visits></visits>
+            <visits [checkup]="checkup" [page]="page" [patientId]="patientId" (getCheckups)="getCheckups($event)" (deleteCheckup)="deleteCheckup($event)"></visits>
         </div>
     </div>
 </div>

@@ -3,14 +3,14 @@
         <li><a class="atag" routerLink="/patient/list">Patients</a>
             <md-icon>chevron_right</md-icon>
         </li>
-        <li><a class="atag" routerLink="/patient/report">Report</a>
+        <li><a class="atag" routerLink="/patient/report/{{patientId}}">Report</a>
             <md-icon>chevron_right</md-icon>
         </li>
         <li>
-            <p>New Checkup</p>
+            <p>{{diagnosisName}}</p>
         </li>
     </ul>
-    <button md-raised-button class="float-right mat-primary" routerLink="/patient/details/new">New Patient</button>
+    <button md-raised-button class="float-right mat-primary" routerLink="/patient/checkup/{{patientId}}/new">New Checkup</button>
     <p class="clearfix"></p>
     <form (ngSubmit)="onSubmit()">
         <h4>Checkup</h4>
@@ -36,27 +36,31 @@
         </div>
         <h4>Prescription</h4>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <div fxFlex="50px">#</div>
             <div fxFlex="20%">Medicine</div>
             <div fxFlex="20%">No.of Days</div>
             <div fxFlex="20%">When to take</div>
             <div fxFlex="150px">Before Meal?</div>
             <div fxFlex="150px">Delete</div>
         </div>
-        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" *ngFor="let item of checkup.prescription">
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" *ngFor="let item of checkup.prescription; let key = index">
+            <div fxFlex="50px" class="no">{{key + 1}}</div>
             <md-input-container fxFlex="20%">
-                <input type="text" mdInput [(ngModel)]="item.medication" name="medication">
+                <input mdInput [(ngModel)]="item.medicine" [ngModelOptions]="{standalone: true}">
             </md-input-container>
             <md-input-container fxFlex="20%">
-                <input mdInput [(ngModel)]="item.noOfDays" name="noOfDays">
+                <input mdInput [(ngModel)]="item.noOfDays" [ngModelOptions]="{standalone: true}">
             </md-input-container>
-            <md-input-container fxFlex="20%">
-                <input mdInput [(ngModel)]="item.whenToTake" name="whenToTake">
-            </md-input-container>
+            <md-select class="field-when-to-take" fxFlex="20%" [(ngModel)]="item.whenToTake" [ngModelOptions]="{standalone: true}">
+                <md-option *ngFor="let take of whenToTakeList" [value]="take.value">
+                    {{ take.viewValue }}
+                </md-option>
+            </md-select>
             <div fxFlex="150px" class="field-before-meal">
-                <md-checkbox [(ngModel)]="item.beforeMeal" name="beforeMeal"></md-checkbox>
+                <md-checkbox [(ngModel)]="item.beforeMeal" [ngModelOptions]="{standalone: true}"></md-checkbox>
             </div>
             <div fxFlex="150px" class="field-delete">
-                <a class="atag">
+                <a class="atag" title="Delete Medicine" (click)="deleteMedicine(key)">
                     <md-icon>delete_forever</md-icon>
                 </a>
             </div>
@@ -65,19 +69,19 @@
             <div fxFlex="60%">
             </div>
             <div fxFlex="230px">
-                <button md-raised-button class="float-right mat-primary">New Medicine</button>
+                <a md-raised-button class="float-right mat-info" (click)="addMedicine()">New Medicine</a>
             </div>
         </div>
         <h4>ExtraNotes</h4>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <md-input-container fxFlex="100%">
-                <textarea mdInput placeholder="Symptoms" [(ngModel)]="checkup.symptoms" name="symptoms"></textarea>
+                <textarea mdInput placeholder="Extra Notes" [(ngModel)]="checkup.extraNotes" name="extraNotes"></textarea>
             </md-input-container>
         </div>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <div fxFlex="67%"></div>
             <div fxFlex="33%" class="text-right">
-                <a md-raised-button routerLink="/patient/list">Cancel</a>
+                <a md-raised-button routerLink="/patient/report/{{patientId}}">Cancel</a>
                 <button md-raised-button class="mat-primary" type="submit">Save</button>
             </div>
         </div>

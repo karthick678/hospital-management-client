@@ -2,14 +2,21 @@
     h4 {
         margin-top: 0px;
     }
-    .field-doctor-name {
+    .field-doctor-name,
+    .field-when-to-take {
         margin-top: 15px;
     }
     .field-delete {
         line-height: 60px;
         padding-top: 10px;
+        &:hover {
+            cursor: pointer;
+        }
     }
     .field-before-meal {
         line-height: 60px;
+    }
+    .no {
+        padding-top: 20px;
     }
 }

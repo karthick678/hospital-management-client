@@ -7,6 +7,7 @@ import { MaterialModule, MdNativeDateModule } from '@angular/material';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
+import { ModelDialogComponent } from './model-dialog/model-dialog.component';
 import { SubheaderComponent } from './subheader/subheader.component';
 
 @NgModule({
@@ -18,9 +19,9 @@ import { SubheaderComponent } from './subheader/subheader.component';
         MdNativeDateModule,
         NgxDatatableModule,
         FlexLayoutModule],
-    declarations: [SubheaderComponent],
+    declarations: [SubheaderComponent, ModelDialogComponent],
     exports: [
-        FormsModule, HttpModule, CommonModule, MaterialModule, MdNativeDateModule, NgxDatatableModule, FlexLayoutModule, SubheaderComponent
+        FormsModule, HttpModule, CommonModule, MaterialModule, MdNativeDateModule, NgxDatatableModule, FlexLayoutModule, SubheaderComponent, ModelDialogComponent
     ]
 })
 export class SharedModule { }

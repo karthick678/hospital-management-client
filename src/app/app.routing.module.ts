@@ -1,7 +1,9 @@
 import { ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, LoadChildren } from '@angular/router';
 
+import { DoctorComponent } from './doctor/doctor.component';
 import { PatientComponent } from './patient/patient.component';
+import { MedicineComponent } from './medicine/medicine.component';
 
 const appRoutes: Routes = [
     {
@@ -12,6 +14,14 @@ const appRoutes: Routes = [
     {
         path: 'patient',
         loadChildren: './patient/patient.module#PatientModule',
+    },
+    {
+        path: 'doctor',
+        loadChildren: './doctor/doctor.module#DoctorModule',
+    },
+    {
+        path: 'medicine',
+        loadChildren: './medicine/medicine.module#MedicineModule',
     }
 ];
 

@@ -1,0 +1,67 @@
+<div class="doctor-details-component">
+    <div>
+        <ul class="breadcrumb">
+            <li><a class="atag" routerLink="/doctor/list">Doctors</a>
+                <md-icon>chevron_right</md-icon>
+            </li>
+            <li>
+                <p>{{doctorName}}</p>
+            </li>
+        </ul>
+        <button md-raised-button class="float-right mat-primary" routerLink="/doctor/details/new">New Doctor</button>
+        <p class="clearfix"></p>
+    </div>
+    <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+        <div fxFlex="150px">
+            <div class="profile-user-img">
+                <md-icon>account_box</md-icon>
+            </div>
+            <div class="field-status">
+                <p><b>Status</b></p>
+                <md-slide-toggle [(ngModel)]="doctor.status">
+                </md-slide-toggle>
+            </div>
+        </div>
+        <div fxFlex="100%">
+            <form (ngSubmit)="onSubmit()">
+                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                    <md-input-container fxFlex="33%">
+                        <input type="text" mdInput placeholder="First Name" [(ngModel)]="doctor.name.first" name="first">
+                    </md-input-container>
+                    <md-input-container fxFlex="33%">
+                        <input mdInput placeholder="Middle Name" [(ngModel)]="doctor.name.middle" name="middle">
+                    </md-input-container>
+                    <md-input-container fxFlex="33%">
+                        <input mdInput placeholder="Last Name" [(ngModel)]="doctor.name.last" name="last">
+                    </md-input-container>
+                </div>
+                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                    <md-input-container fxFlex="33%">
+                        <input mdInput placeholder="Email" [(ngModel)]="doctor.email" name="email">
+                    </md-input-container>
+                    <md-select placeholder="Gender" fxFlex="33%" class="field-gender" [(ngModel)]="doctor.gender" name="gender">
+                        <md-option *ngFor="let gender of genderList" [value]="gender.value">
+                            {{ gender.viewValue }}
+                        </md-option>
+                    </md-select>
+                    <md-input-container fxFlex="33%">
+                        <span mdPrefix>+91 &nbsp;</span>
+                        <input mdInput placeholder="Mobile Number" [(ngModel)]="doctor.mobileNumber" name="mobileNumber">
+                    </md-input-container>
+                </div>
+                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                    <md-input-container fxFlex="33%">
+                        <input mdInput placeholder="Home Phone" [(ngModel)]="doctor.phoneNumber" name="phoneNumber">
+                    </md-input-container>
+                </div>
+                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                    <div fxFlex="67%"></div>
+                    <div fxFlex="33%" class="text-right">
+                        <a md-raised-button routerLink="/doctor/list">Cancel</a>
+                        <button md-raised-button class="mat-primary" type="submit">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

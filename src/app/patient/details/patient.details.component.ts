@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MdSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Patient } from './../shared/patient.model';
 import { PatientDetailsService } from './patient.details.service';
@@ -19,7 +20,7 @@ export class PatientDetailsComponent {
         { value: 'female', viewValue: 'Female' }
     ];
 
-    constructor(private patientDetailsService: PatientDetailsService, private activatedRoute: ActivatedRoute, private router: Router) {
+    constructor(public snackBar: MdSnackBar, private patientDetailsService: PatientDetailsService, private activatedRoute: ActivatedRoute, private router: Router) {
 
     }
 
@@ -58,6 +59,10 @@ export class PatientDetailsComponent {
     updatePatient() {
         this.patientDetailsService.updatePatientDetails(this.patient).subscribe(patient => {
             this.patient = patient;
+            this.snackBar.open('Update Successfully!', '', {
+                duration: 1000,
+                extraClasses: ['success-snackbar']
+            });
         });
     }
 }

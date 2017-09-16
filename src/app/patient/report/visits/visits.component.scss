@@ -1,6 +1,11 @@
 .patient-report-visit-component {
+    .time-line {
+        .datatable-row-odd:hover {
+            background: none !important;
+        }
+    }
     .timeline {
-        margin: 5px 0px 0px;
+        margin: 5px 0px -48px 0px;
         padding: 0px;
         position: relative;
         &::before {
@@ -58,6 +63,9 @@
                 margin-right: 15px;
                 padding: 0;
                 position: relative;
+                &.extra-note {
+                    padding-bottom: 20px;
+                }
                 .timeline-header {
                     margin: 0;
                     font-size: 14px;
@@ -72,14 +80,13 @@
                     table {
                         width: 100%;
                         max-width: 100%;
-                        margin-bottom: 1rem;
                         thead th {
                             border-bottom: 1px solid #eaecf0;
                             padding: 5px;
                             color: #5e6c84;
                         }
                         tbody td {
-                            padding: 5px;
+                            line-height: 0.3;
                         }
                     }
                 }

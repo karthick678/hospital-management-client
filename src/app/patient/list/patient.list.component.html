@@ -6,13 +6,18 @@
     </div>
     <form (ngSubmit)="onSubmit()">
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-            <div fxFlex="33%"></div>
-            <md-select fxFlex="33%" class="field-search" [(ngModel)]="searchAttribute" name="gender">
+            <div fxFlex="100%"></div>
+            <md-select fxFlex="120px" class="field-search" [(ngModel)]="page.size" name="pageSize" (change)="setPage({ offset: 0 })">
+                <md-option *ngFor="let list of pageSizeList" [value]="list.value">
+                    {{ list.name }}
+                </md-option>
+            </md-select>
+            <md-select fxFlex="20%" class="field-search" [(ngModel)]="searchAttribute" name="gender">
                 <md-option *ngFor="let list of searchList" [value]="list.value">
                     {{ list.viewValue }}
                 </md-option>
             </md-select>
-            <md-input-container fxFlex="33%">
+            <md-input-container fxFlex="20%">
                 <input type="text" mdInput [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}">
                 <md-icon mdSuffix>search</md-icon>
             </md-input-container>
