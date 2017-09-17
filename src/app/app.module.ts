@@ -10,6 +10,8 @@ import { routing } from './app.routing.module';
 // Module
 import { SharedModule } from './shared/shared.module';
 import { ModelDialogComponent } from './shared/model-dialog/model-dialog.component';
+import { LoginModule } from './login/login.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { PatientModule } from './patient/patient.module';
 import { MedicineModule } from './medicine/medicine.module';
@@ -22,6 +24,8 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     routing,
     SharedModule,
+    LoginModule,
+    DashboardModule, 
     DoctorModule,
     PatientModule,
     MedicineModule,
