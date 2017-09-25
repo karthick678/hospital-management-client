@@ -51,7 +51,7 @@ export class PatientCheckupComponent {
     createCheckupDetails() {
         this.patientCheckupComponentService.createCheckupDetails(this.checkup).subscribe(checkup => {
             this.checkup = checkup;
-            this.router.navigate(['/patient/checkup/' + this.patientId + '/' + this.checkup._id]);
+            this.router.navigate(['/app/patient/checkup/' + this.patientId + '/' + this.checkup._id]);
         });
     }
 

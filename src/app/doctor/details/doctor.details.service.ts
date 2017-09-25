@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Http } from '@angular/http';
+import { HttpClient } from './../../guard/http.client';
 import { Observable } from "rxjs";
 import 'rxjs/add/operator/map';
 
@@ -9,7 +10,7 @@ import { AppSettings } from '../../app.settings';
 @Injectable()
 export class DoctorDetailsService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     sampleDoctor() {
@@ -45,7 +46,7 @@ export class DoctorDetailsService {
     }
 
     deleteDoctor(id: string) {
-        return this.http.delete(AppSettings.API_ENDPOINT + '/doctorDoctor/' + id)
+        return this.http.delete(AppSettings.API_ENDPOINT + '/deleteDoctor/' + id)
             .map((res) => res.json());
     }
 }

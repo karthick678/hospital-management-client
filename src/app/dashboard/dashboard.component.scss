@@ -1,3 +1,88 @@
 .dashboard-list-component {
-    
+    table {
+        margin-bottom: 5px;
+    }
+    .blood-group-box {
+        min-height: 100vh;
+        background: #f4f5f7;
+        padding: 20px 10px;
+        .blood-group-img {
+            margin: 0 auto;
+            width: 105px;
+            .mat-icon {
+                color: #3f51b5;
+                font-size: 100px;
+            }
+        }
+        .blood-group--name {
+            color: #0747a6;
+            font-size: 13px;
+            text-align: center;
+            margin: 0px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eaecf0;
+        }
+        .list-group {
+            padding-left: 0;
+            margin-bottom: 20px;
+            .list-group-item {
+                border-bottom: 1px solid #eaecf0;
+                margin-bottom: 10px;
+                padding-bottom: 10px;
+                font-size: 13px;
+                b {
+                    color: #5E6C84;
+                    position: relative;
+                    padding-left: 5px;
+                }
+                span {
+                    color: #0747a6;
+                    float: right;
+                }
+            }
+        }
+    }
+    .activity-box {
+        margin-bottom: 10px;
+        .activity-icon {
+            background: #d9e0f1;
+            height: 32px;
+            width: 32px;
+            margin-right: 10px;
+            border-radius: 50%;
+            text-align: center;
+            .mat-icon {
+                color: #5E6C84;
+                line-height: 32px;
+            }
+        }
+        .activity-description {
+            a {
+                font-size: 12px;
+            }
+        }
+        .activity-info {
+            color: #707070;
+            font-size: 12px;
+        }
+    }
+    .medicines-list {
+        margin: 0px;
+        padding: 0px 0px 0px 20px;
+        li {
+            margin-bottom: 5px;
+            color: #333333;
+            a {
+                text-decoration: none;
+                font-size: 14px;
+                color: #333333;
+                margin-bottom: 5px;
+                &:hover,
+                &:focus {
+                    color: #0052CC;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
 }

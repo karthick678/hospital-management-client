@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MdDialog } from '@angular/material';
 import { MdSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Doctor } from './../shared/doctor.model';
 import { DoctorDetailsService } from './doctor.details.service';
+import { ModelDialogComponent } from './../../shared/model-dialog/model-dialog.component';
 
 @Component({
     selector: 'doctor-details',
@@ -20,7 +22,7 @@ export class DoctorDetailsComponent {
         { value: 'female', viewValue: 'Female' }
     ];
 
-    constructor(public snackBar: MdSnackBar, private doctorDetailsService: DoctorDetailsService, private activatedRoute: ActivatedRoute, private router: Router) {
+    constructor(public snackBar: MdSnackBar, private doctorDetailsService: DoctorDetailsService, private activatedRoute: ActivatedRoute, private router: Router, public mdDialog: MdDialog) {
     }
 
     ngOnInit() {
@@ -51,7 +53,7 @@ export class DoctorDetailsComponent {
     createDoctor() {
         this.doctorDetailsService.createDoctorDetails(this.doctor).subscribe(doctor => {
             this.doctor = doctor;
-            this.router.navigate(['/doctor/details/' + this.doctor._id]);
+            this.router.navigate(['/app/doctor/details/' + this.doctor._id]);
         });
     }
 
@@ -62,6 +64,22 @@ export class DoctorDetailsComponent {
                 duration: 1000,
                 extraClasses: ['success-snackbar']
             });
+        });
+    }
+
+    deleteConfirm() {
+        let mdDialog = this.mdDialog.open(ModelDialogComponent);
+        mdDialog.afterClosed().subscribe(isDelete => {
+            if (isDelete) {
+                this.deleteDoctor();
+            }
+        });
+    }
+
+    deleteDoctor() {
+        let id = this.doctor._id;
+        this.doctorDetailsService.deleteDoctor(id).subscribe(res => {
+            this.router.navigate(['/app/doctor/list']);
         });
     }
 }

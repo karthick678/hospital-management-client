@@ -1,16 +1,16 @@
 <div class="patient-checkup-component">
     <ul class="breadcrumb">
-        <li><a class="atag" routerLink="/patient/list">Patients</a>
+        <li><a class="atag" routerLink="/app/patient/list">Patients</a>
             <md-icon>chevron_right</md-icon>
         </li>
-        <li><a class="atag" routerLink="/patient/report/{{patientId}}">Report</a>
+        <li><a class="atag" routerLink="/app/patient/report/{{patientId}}">Report</a>
             <md-icon>chevron_right</md-icon>
         </li>
         <li>
             <p>{{diagnosisName}}</p>
         </li>
     </ul>
-    <button md-raised-button class="float-right mat-primary" routerLink="/patient/checkup/{{patientId}}/new">New Checkup</button>
+    <button md-raised-button class="float-right mat-primary" routerLink="/app/patient/checkup/{{patientId}}/new">New Checkup</button>
     <p class="clearfix"></p>
     <form (ngSubmit)="onSubmit()">
         <h4>Checkup</h4>
@@ -81,7 +81,7 @@
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <div fxFlex="67%"></div>
             <div fxFlex="33%" class="text-right">
-                <a md-raised-button routerLink="/patient/report/{{patientId}}">Cancel</a>
+                <a md-raised-button routerLink="/app/patient/report/{{patientId}}">Cancel</a>
                 <button md-raised-button class="mat-primary" type="submit">Save</button>
             </div>
         </div>

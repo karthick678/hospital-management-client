@@ -2,16 +2,17 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 
 import { RouterModule } from '@angular/router';
-import { DashboardComponent } from './dashboard.component';
+import { HomeRoutingModule } from './home.routing.module'
+import { HomeComponent } from './home.component';
 
 @NgModule({
     imports: [
         SharedModule,
-        RouterModule,
+        HomeRoutingModule
     ],
     declarations: [
-        DashboardComponent]
+        HomeComponent]
 })
 
-export class DashboardModule { }
+export class HomeModule { }
 

@@ -1,14 +1,17 @@
 <div class="category-details-component">
     <div>
         <ul class="breadcrumb">
-            <li><a class="atag" routerLink="/medicine/category/list">Categories</a>
+            <li><a class="atag" routerLink="/app/medicine/category/list">Categories</a>
                 <md-icon>chevron_right</md-icon>
             </li>
             <li>
                 <p>{{ categoryName }}</p>
             </li>
         </ul>
-        <button md-raised-button class="float-right mat-primary" routerLink="/medicine/category/details/new">New Categroy</button>
+        <div class="float-right">
+            <button md-raised-button (click)="deleteConfirm()" *ngIf="category._id">Delete</button>
+            <button md-raised-button class="mat-primary" routerLink="/app/medicine/category/details/new">New Categroy</button>
+        </div>
         <p class="clearfix"></p>
     </div>
     <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
@@ -37,7 +40,7 @@
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <div fxFlex="67%"></div>
                     <div fxFlex="33%" class="text-right">
-                        <a md-raised-button routerLink="/medicine/category/list">Cancel</a>
+                        <a md-raised-button routerLink="/app/medicine/category/list">Cancel</a>
                         <button md-raised-button class="mat-primary" type="submit">Save</button>
                     </div>
                 </div>

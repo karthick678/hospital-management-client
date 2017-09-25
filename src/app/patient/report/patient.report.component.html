@@ -1,15 +1,15 @@
 <div class="patient-report-component">
     <div>
         <ul class="breadcrumb">
-            <li><a class="atag" routerLink="/patient/list">Patients</a><md-icon>chevron_right</md-icon></li>
+            <li><a class="atag" routerLink="/app/patient/list">Patients</a><md-icon>chevron_right</md-icon></li>
             <li class="active">
                 <p>{{patientName}}</p>
             </li>
         </ul>
         <div class="float-right">
-            <button md-button routerLink="/patient/details/{{id}}">Edit</button>
+            <button md-button routerLink="/app/patient/details/{{id}}">Edit</button>
             <button md-button>Delete</button>
-            <button md-raised-button class="mat-primary" routerLink="/patient/details/new">New Patient</button>
+            <button md-raised-button class="mat-primary" routerLink="/app/patient/details/new">New Patient</button>
         </div>
         <p class="clearfix"></p>
     </div>

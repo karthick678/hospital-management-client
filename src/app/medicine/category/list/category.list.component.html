@@ -1,7 +1,7 @@
 <div class="category-list-component">
     <div>
         <sub-header [title]="'Stocks'" class="float-left"></sub-header>
-        <button md-raised-button class="float-right mat-primary" routerLink="/medicine/category/details/new">New Category</button>
+        <button md-raised-button class="float-right mat-primary" routerLink="/app/medicine/category/details/new">New Category</button>
         <p class="clearfix"></p>
     </div>
     <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
@@ -32,7 +32,7 @@
                 [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)='setPage($event)'>
                 <ngx-datatable-column name="Name">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                        <a class="atag" routerLink="/medicine/category/details/{{row._id}}" title="{{row.name}}">
+                        <a class="atag" routerLink="/app/medicine/category/details/{{row._id}}" title="{{row.name}}">
                     {{row.name}}
                 </a>
                     </ng-template>
@@ -49,7 +49,7 @@
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Edit">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                        <a class="atag" routerLink="/medicine/category/details/{{row._id}}" title="Edit">
+                        <a class="atag" routerLink="/app/medicine/category/details/{{row._id}}" title="Edit">
                             <md-icon>mode_edit</md-icon>
                         </a>
                     </ng-template>

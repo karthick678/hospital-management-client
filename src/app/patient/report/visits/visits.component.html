@@ -10,7 +10,7 @@
                 </md-option>
             </md-select> 
             <div fxFlex="150px">
-                <button md-raised-button class="float-right mat-info" routerLink="/patient/checkup/{{patientId}}/new">New Checkup</button>
+                <button md-raised-button class="float-right mat-info" routerLink="/app/patient/checkup/{{patientId}}/new">New Checkup</button>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
                 Doctor : {{row.doctorName}}
             </span>
                 <span class="time-label-button">
-                <button md-button routerLink="/patient/checkup/{{row.patientId}}/{{row._id}}"><md-icon>edit</md-icon></button>
+                <button md-button routerLink="/app/patient/checkup/{{row.patientId}}/{{row._id}}"><md-icon>edit</md-icon></button>
                 <button md-button (click)="openmdDialog(row)"><md-icon>delete_forever</md-icon></button>
             </span>
             </li>

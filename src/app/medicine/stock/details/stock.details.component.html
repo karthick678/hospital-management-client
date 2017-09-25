@@ -1,14 +1,17 @@
 <div class="stock-details-component">
     <div>
         <ul class="breadcrumb">
-            <li><a class="atag" routerLink="/medicine/stock/list">Stocks</a>
+            <li><a class="atag" routerLink="/app/medicine/stock/list">Stocks</a>
                 <md-icon>chevron_right</md-icon>
             </li>
             <li>
                 <p>{{ stockName }}</p>
             </li>
         </ul>
-        <button md-raised-button class="float-right mat-primary" routerLink="/medicine/stock/details/new">New Stock</button>
+        <div class="float-right">
+            <button md-raised-button (click)="deleteConfirm()" *ngIf="stock._id">Delete</button>
+            <button md-raised-button class="mat-primary" routerLink="/app/medicine/stock/details/new">New Stock</button>
+        </div>
         <p class="clearfix"></p>
     </div>
     <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
@@ -68,7 +71,7 @@
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <div fxFlex="67%"></div>
                     <div fxFlex="33%" class="text-right">
-                        <a md-raised-button routerLink="/medicine/stock/list">Cancel</a>
+                        <a md-raised-button routerLink="/app/medicine/stock/list">Cancel</a>
                         <button md-raised-button class="mat-primary" type="submit">Save</button>
                     </div>
                 </div>

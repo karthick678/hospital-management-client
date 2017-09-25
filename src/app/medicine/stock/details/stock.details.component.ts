@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { MdSnackBar } from '@angular/material';
+import { MdDialog } from '@angular/material';
 import { StockDetailsService } from './stock.details.service';
 import { Stock } from './../../shared/stock.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ModelDialogComponent } from './../../../shared/model-dialog/model-dialog.component';
 
 @Component({
     selector: 'stock-details',
@@ -17,7 +19,7 @@ export class StockDetailsComponent {
     stockName: string;
     categoriesList = [{ name: 'Analgesico', value: 'Analgesico' }];
 
-    constructor(public snackBar: MdSnackBar, private stockDetailsService: StockDetailsService, private activatedRoute: ActivatedRoute, private router: Router) {
+    constructor(public snackBar: MdSnackBar, private stockDetailsService: StockDetailsService, private activatedRoute: ActivatedRoute, private router: Router, public mdDialog: MdDialog) {
     }
 
     ngOnInit() {
@@ -48,7 +50,7 @@ export class StockDetailsComponent {
     createStock() {
         this.stockDetailsService.createStockDetails(this.stock).subscribe(stock => {
             this.stock = stock;
-            this.router.navigate(['/medicine/stock/details/' + this.stock._id]);
+            this.router.navigate(['/app/medicine/stock/details/' + this.stock._id]);
         });
     }
 
@@ -59,6 +61,22 @@ export class StockDetailsComponent {
                 duration: 1000,
                 extraClasses: ['success-snackbar']
             });
+        });
+    }
+
+    deleteConfirm() {
+        let mdDialog = this.mdDialog.open(ModelDialogComponent);
+        mdDialog.afterClosed().subscribe(isDelete => {
+            if (isDelete) {
+                this.deleteStock();
+            }
+        });
+    }
+
+    deleteStock() {
+        let id = this.stock._id;
+        this.stockDetailsService.deleteStock(id).subscribe(res => {
+            this.router.navigate(['/app/medicine/stock/list']);
         });
     }
 }

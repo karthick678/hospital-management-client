@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Http } from '@angular/http';
+import { HttpClient } from './../../guard/http.client';
 import { Observable } from "rxjs";
 import 'rxjs/add/operator/map';
 
@@ -9,7 +10,7 @@ import { AppSettings } from '../../app.settings';
 @Injectable()
 export class PatientCheckupComponentService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     sampleCheckup() {

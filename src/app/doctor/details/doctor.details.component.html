@@ -1,14 +1,17 @@
 <div class="doctor-details-component">
     <div>
         <ul class="breadcrumb">
-            <li><a class="atag" routerLink="/doctor/list">Doctors</a>
+            <li><a class="atag" routerLink="/app/doctor/list">Doctors</a>
                 <md-icon>chevron_right</md-icon>
             </li>
             <li>
                 <p>{{doctorName}}</p>
             </li>
         </ul>
-        <button md-raised-button class="float-right mat-primary" routerLink="/doctor/details/new">New Doctor</button>
+        <div class="float-right">
+            <button md-raised-button (click)="deleteConfirm()" *ngIf="doctor._id">Delete</button>
+            <button md-raised-button class="mat-primary" routerLink="/app/doctor/details/new">New Doctor</button>
+        </div>
         <p class="clearfix"></p>
     </div>
     <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
@@ -57,7 +60,7 @@
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <div fxFlex="67%"></div>
                     <div fxFlex="33%" class="text-right">
-                        <a md-raised-button routerLink="/doctor/list">Cancel</a>
+                        <a md-raised-button routerLink="/app/doctor/list">Cancel</a>
                         <button md-raised-button class="mat-primary" type="submit">Save</button>
                     </div>
                 </div>

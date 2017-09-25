@@ -21,7 +21,8 @@
             margin: auto;
             height: 400px;
             img {
-                width: 80px;
+                max-width: 80px;
+                max-height: 80px;
             }
         }
     }

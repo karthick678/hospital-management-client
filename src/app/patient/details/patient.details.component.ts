@@ -16,8 +16,20 @@ export class PatientDetailsComponent {
     id: string;
     patientName: string;
     genderList = [
-        { value: 'male', viewValue: 'Male' },
-        { value: 'female', viewValue: 'Female' }
+        { value: '', viewValue: '-- select --' },
+        { value: 'Male', viewValue: 'Male' },
+        { value: 'Female', viewValue: 'Female' }
+    ];
+    bloodGroupsList = [
+        { value: '', viewValue: '-- select --' },
+        { value: 'O+', viewValue: 'O+' },
+        { value: 'O-', viewValue: 'O-' },
+        { value: 'A+', viewValue: 'A+' },
+        { value: 'A-', viewValue: 'A-' },
+        { value: 'B+', viewValue: 'B+' },
+        { value: 'B-', viewValue: 'B-' },
+        { value: 'AB+', viewValue: 'AB+' },
+        { value: 'AB-', viewValue: 'AB-' },
     ];
 
     constructor(public snackBar: MdSnackBar, private patientDetailsService: PatientDetailsService, private activatedRoute: ActivatedRoute, private router: Router) {
@@ -52,7 +64,7 @@ export class PatientDetailsComponent {
     createPatient() {
         this.patientDetailsService.createPatientDetails(this.patient).subscribe(patient => {
             this.patient = patient;
-            this.router.navigate(['/patient/details/' + this.patient._id]);
+            this.router.navigate(['/app/patient/details/' + this.patient._id]);
         });
     }
 

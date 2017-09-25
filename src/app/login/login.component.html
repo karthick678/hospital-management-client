@@ -11,18 +11,18 @@
                     <form (ngSubmit)="onSubmit()">
                         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                             <md-input-container fxFlex="100%">
-                                <input type="text" mdInput placeholder="Email or Phone" [(ngModel)]="user.email" [ngModelOptions]="{standalone: true}">
+                                <input type="text" mdInput placeholder="Email" [(ngModel)]="user.email" name="email">
                             </md-input-container>
                         </div>
                         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                             <md-input-container fxFlex="100%">
-                                <input type="password" mdInput placeholder="Password" [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}">
+                                <input type="password" mdInput placeholder="Password" [(ngModel)]="user.password" name="password">
                             </md-input-container>
                         </div>
                         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                             <div fxFlex="33%"></div>
                             <div fxFlex="67%" class="text-right">
-                                <button md-raised-button class="mat-primary" type="submit">Login</button>
+                                <button md-raised-button class="mat-primary" type="submit" routerLink="/app/dashboard">Login</button>
                             </div>
                         </div>
                     </form>
