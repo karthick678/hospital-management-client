@@ -5,6 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Doctor } from './../shared/doctor.model';
 import { DoctorDetailsService } from './doctor.details.service';
 import { ModelDialogComponent } from './../../shared/model-dialog/model-dialog.component';
+import { ModelDialogContentComponent } from './../../shared/model-dialog-content/model-dialog-content.component';
 
 @Component({
     selector: 'doctor-details',
@@ -18,6 +19,7 @@ export class DoctorDetailsComponent {
     id: string;
     doctorName: string;
     genderList = [
+        { value: '', viewValue: '-- select --' },
         { value: 'male', viewValue: 'Male' },
         { value: 'female', viewValue: 'Female' }
     ];
@@ -54,6 +56,8 @@ export class DoctorDetailsComponent {
         this.doctorDetailsService.createDoctorDetails(this.doctor).subscribe(doctor => {
             this.doctor = doctor;
             this.router.navigate(['/app/doctor/details/' + this.doctor._id]);
+        }, err => {
+            console.log(err);
         });
     }
 
@@ -66,6 +70,7 @@ export class DoctorDetailsComponent {
             });
         });
     }
+
 
     deleteConfirm() {
         let mdDialog = this.mdDialog.open(ModelDialogComponent);

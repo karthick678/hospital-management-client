@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MdDialogModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
 
@@ -13,6 +14,7 @@ import { HttpClient } from "./guard/http.client";
 import { AuthGuard } from './guard/auth.guard';
 import { SharedModule } from './shared/shared.module';
 import { ModelDialogComponent } from './shared/model-dialog/model-dialog.component';
+import { ModelDialogContentComponent } from './shared/model-dialog-content/model-dialog-content.component';
 import { LoginModule } from './login/login.module';
 import { HomeModule } from './home/home.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -28,6 +30,8 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     routing,
     HttpClientModule,
+    FormsModule, 
+    ReactiveFormsModule,
     SharedModule,
     LoginModule,
     HomeModule,
@@ -42,7 +46,8 @@ import { AppComponent } from './app.component';
   ],
   providers: [AuthGuard, HttpClient],
   entryComponents: [
-    ModelDialogComponent
+    ModelDialogComponent,
+    ModelDialogContentComponent
   ],
   bootstrap: [AppComponent]
 })

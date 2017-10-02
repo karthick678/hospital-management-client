@@ -1,40 +1,41 @@
-<div class="dashboard-list-component">
+<div class="dashboard-list-component height-100">
     <div>
         <sub-header [title]="'Dashboard'" class="float-left"></sub-header>
         <p class="clearfix"></p>
     </div>
-    <div fxLayout fxLayout.xs="column" fxLayoutGap="20px">
+    <div fxLayout fxLayout.xs="column" fxLayoutGap="20px" class="blood-group-panel">
         <div fxFlex="260px" class="blood-group-box">
             <div class="blood-group-img">
                 <md-icon>invert_colors</md-icon>
             </div>
-            <p class="blood-group--name">Patient Blood Groups</p>
+            <p class="blood-group-name">Patient Blood Groups</p>
             <ul class="list-group list-unstyle">
                 <li class="list-group-item">
-                    <b>O-positive</b><span>23</span>
+                    <b>O-positive</b><span>{{bloodGroups.oPositive}}</span>
                 </li>
                 <li class="list-group-item">
-                    <b>O-negative</b><span>23</span>
+                    <b>O-negative</b><span>{{bloodGroups.oNegative}}</span>
                 </li>
                 <li class="list-group-item">
-                    <b>A-positive</b><span>23</span>
+                    <b>A-positive</b><span>{{bloodGroups.aPositive}}</span>
                 </li>
                 <li class="list-group-item">
-                    <b>A-negative</b><span>23</span>
+                    <b>A-negative</b><span>{{bloodGroups.aNegative}}</span>
                 </li>
                 <li class="list-group-item">
-                    <b>B-positive</b><span>23</span>
+                    <b>B-positive</b><span>{{bloodGroups.bPositive}}</span>
                 </li>
                 <li class="list-group-item">
-                    <b>B-negative</b><span>23</span>
+                    <b>B-negative</b><span>{{bloodGroups.bNegative}}</span>
                 </li>
                 <li class="list-group-item">
-                    <b>AB-positive</b><span>23</span>
+                    <b>AB-positive</b><span>{{bloodGroups.abPositive}}</span>
                 </li>
                 <li class="list-group-item">
-                    <b>AB-negative</b><span>23</span>
+                    <b>AB-negative</b><span>{{bloodGroups.abNegative}}</span>
                 </li>
             </ul>
+            <p class="clearfix"></p>
         </div>
         <div fxFlex="100%">
             <sub-header [title]="'Overview'"></sub-header>
@@ -47,111 +48,52 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><a href="" class="atag">Doctors</a></td>
-                        <td>70</td>
-                        <td>30</td>
-                        <td>30</td>
+                        <td><a routerLink="/app/doctor" class="atag">Doctors</a></td>
+                        <td>{{documents.doctor}}</td>
+                        <td>{{documents.doctorActive}}</td>
+                        <td>{{documents.doctor - documents.doctorActive}}</td>
                     </tr>
                     <tr>
-                        <td><a href="" class="atag">Patients</a></td>
-                        <td>70</td>
-                        <td>30</td>
-                        <td>30</td>
+                        <td><a routerLink="/app/patient" class="atag">Patients</a></td>
+                        <td>{{documents.patient}}</td>
+                        <td>{{documents.patientActive}}</td>
+                        <td>{{documents.patient - documents.patientActive}}</td>
                     </tr>
                     <tr>
-                        <td><a href="" class="atag">Stock</a></td>
-                        <td>70</td>
-                        <td>30</td>
-                        <td>30</td>
+                        <td><a routerLink="/app/medicine/stock" class="atag">Stock</a></td>
+                        <td>{{documents.stock}}</td>
+                        <td>{{documents.stockActive}}</td>
+                        <td>{{documents.stock - documents.stockActive}}</td>
                     </tr>
                     <tr>
-                        <td><a href="" class="atag">Category</a></td>
-                        <td>70</td>
-                        <td>30</td>
-                        <td>30</td>
+                        <td><a routerLink="/app/medicine/category" class="atag">Category</a></td>
+                        <td>{{documents.category}}</td>
+                        <td>{{documents.categoryActive}}</td>
+                        <td>{{documents.category - documents.categoryActive}}</td>
                     </tr>
                 </tbody>
             </table>
             <sub-header [title]="'Expired medicines'"></sub-header>
+            <div *ngIf = !medicines.length>No data to display</div>
             <ul class="medicines-list">
-                <li><a href="">Database configuration (0)</a></li>
-                <li><a href="">Database configuration (5)</a></li>
-                <li><a href="">Database configuration</a></li>
+                <li *ngFor="let medicine of medicines"><a  routerLink="/app/medicine/stock/details/{{medicine._id}}">{{medicine.name}} ({{medicine.qty}})</a></li>
             </ul>
         </div>
         <div fxFlex="260px">
             <sub-header [title]="'Recent Activity'"></sub-header>
-            <div class="activity-box">
+            <div *ngIf = !activites.length>No data to display</div>
+            <div class="activity-box" *ngFor="let activity of activites">
                 <div class="float-left activity-icon">
-                    <md-icon>group_add</md-icon>
+                    <md-icon>{{activity.icon}}</md-icon>
                 </div>
                 <div class="float-left">
-                    <a class="atag">Karthick</a>
+                    <a class="atag" *ngIf="activity.action !== 'Deleted'" routerLink="{{activity.detailsUrl}}">{{activity.name}}</a>
+                    <span *ngIf="activity.action === 'Deleted'">{{activity.name}}</span>
                     <div class="activity-description">
-                        Created New Record <a class="atag">@Doctor</a>
+                        {{activity.action}} a record <a class="atag" routerLink="{{activity.listUrl}}">@{{activity.collectionType}}</a>
                     </div>
                     <div class="activity-info">
-                        7 hours ago
-                    </div>
-                </div>
-                <p class="clearfix"></p>
-            </div>
-            <div class="activity-box">
-                <div class="float-left activity-icon">
-                    <md-icon>group_add</md-icon>
-                </div>
-                <div class="float-left">
-                    <a class="atag">Karthick</a>
-                    <div class="activity-description">
-                        Created New Record @Doctor
-                    </div>
-                    <div class="activity-info">
-                        7 hours ago
-                    </div>
-                </div>
-                <p class="clearfix"></p>
-            </div>
-            <div class="activity-box">
-                <div class="float-left activity-icon">
-                    <md-icon>group_add</md-icon>
-                </div>
-                <div class="float-left">
-                    <a class="atag">Karthick</a>
-                    <div class="activity-description">
-                        Created New Record @Doctor
-                    </div>
-                    <div class="activity-info">
-                        7 hours ago
-                    </div>
-                </div>
-                <p class="clearfix"></p>
-            </div>
-            <div class="activity-box">
-                <div class="float-left activity-icon">
-                    <md-icon>group_add</md-icon>
-                </div>
-                <div class="float-left">
-                    <a class="atag">Karthick</a>
-                    <div class="activity-description">
-                        Created New Record @Doctor
-                    </div>
-                    <div class="activity-info">
-                        7 hours ago
-                    </div>
-                </div>
-                <p class="clearfix"></p>
-            </div>
-            <div class="activity-box">
-                <div class="float-left activity-icon">
-                    <md-icon>group_add</md-icon>
-                </div>
-                <div class="float-left">
-                    <a class="atag">Karthick</a>
-                    <div class="activity-description">
-                        Created New Record @Doctor
-                    </div>
-                    <div class="activity-info">
-                        7 hours ago
+                        {{activity.createdAt | amTimeAgo}}
                     </div>
                 </div>
                 <p class="clearfix"></p>

@@ -37,7 +37,9 @@ export class DoctorDetailsService {
 
     createDoctorDetails(doctor: Doctor): Observable<Doctor> {
         return this.http.post(AppSettings.API_ENDPOINT + '/createDoctorDetails', doctor)
-            .map((res) => res.json());
+            .map((res) => res.json()).catch((error: any) => {
+                return Observable.throw(new Error(error));
+            });
     }
 
     updateDoctorDetails(doctor: Doctor): Observable<Doctor> {

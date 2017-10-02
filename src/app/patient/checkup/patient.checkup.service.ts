@@ -47,4 +47,9 @@ export class PatientCheckupComponentService {
             .map((res) => res.json());
     }
 
+    getDoctorsName(): Observable<any> {
+        return this.http.get(AppSettings.API_ENDPOINT + '/getDoctorsName/')
+            .map((res) => res.json());
+    }
+
 }

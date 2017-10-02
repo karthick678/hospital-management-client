@@ -6,26 +6,46 @@
             <div class="login-panel">
                 <md-card>
                     <img src="./../../assets/images/hm-logo.svg" class="branding" title="Hospial Management" />
-                    <h2>Login</h2>
-                    <p>to use your hospital Management account</p>
-                    <form (ngSubmit)="onSubmit()">
-                        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-                            <md-input-container fxFlex="100%">
-                                <input type="text" mdInput placeholder="Email" [(ngModel)]="user.email" name="email">
-                            </md-input-container>
-                        </div>
-                        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-                            <md-input-container fxFlex="100%">
-                                <input type="password" mdInput placeholder="Password" [(ngModel)]="user.password" name="password">
-                            </md-input-container>
-                        </div>
+
+                    <div *ngIf="isLoginError">
+                        <h2>No account found</h2>
+                        <p>There's no account with the info you provided</p>
                         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                             <div fxFlex="33%"></div>
                             <div fxFlex="67%" class="text-right">
-                                <button md-raised-button class="mat-primary" type="submit" routerLink="/app/dashboard">Login</button>
+                                <button md-raised-button class="mat-primary" (click)="showLoginForm();">Try again</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    <div *ngIf="!isLoginError">
+                        <h2>Login</h2>
+                        <p>to use your hospital Management account</p>
+                        <form (ngSubmit)="onSubmit()" [formGroup]="authForm">
+                            <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                                <md-input-container fxFlex="100%">
+                                    <input type="text" mdInput placeholder="Email" formControlName="email" required>
+                                </md-input-container>
+                            </div>
+                            <div *ngIf="isFieldValid('email')" class="alert-danger">
+                                Email is required
+                            </div>
+                            <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                                <md-input-container fxFlex="100%">
+                                    <input type="password" mdInput placeholder="Password" formControlName="password" required>
+                                </md-input-container>
+                            </div>
+                            <div *ngIf="isFieldValid('password')" class="alert-danger">
+                                Password is required
+                            </div>
+                            <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                                <div fxFlex="33%"></div>
+                                <div fxFlex="67%" class="text-right">
+                                    <button md-raised-button class="mat-primary" type="submit" routerLink="/app/dashboard">Login</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
                 </md-card>
             </div>
         </div>
