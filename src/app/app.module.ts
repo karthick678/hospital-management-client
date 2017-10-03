@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { MdDialogModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
 
@@ -9,6 +9,7 @@ import 'hammerjs';
 import { routing } from './app.routing.module';
 import { HttpClientModule } from "@angular/common/http";
 import { HttpClient } from "./guard/http.client";
+import { AppErrorHandler } from "./guard/error.handler";
 
 // Module
 import { AuthGuard } from './guard/auth.guard';
@@ -30,7 +31,7 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     routing,
     HttpClientModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     SharedModule,
     LoginModule,
@@ -44,7 +45,10 @@ import { AppComponent } from './app.component';
   declarations: [
     AppComponent
   ],
-  providers: [AuthGuard, HttpClient],
+  providers: [
+    AuthGuard,
+    HttpClient,
+    { provide: ErrorHandler, useClass: AppErrorHandler }],
   entryComponents: [
     ModelDialogComponent,
     ModelDialogContentComponent

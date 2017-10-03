@@ -9,32 +9,37 @@
             </li>
         </ul>
         <div class="float-right">
-            <button md-raised-button (click)="deleteConfirm()" *ngIf="category._id">Delete</button>
-            <button md-raised-button class="mat-primary" routerLink="/app/medicine/category/details/new">New Categroy</button>
+            <button md-raised-button class="mat-primary" (click)="deleteConfirm()" *ngIf="categoryForm.value._id">Delete</button>
         </div>
         <p class="clearfix"></p>
     </div>
-    <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-        <div fxFlex="150px">
-            <div class="category-img">
-                <md-icon>local_offer</md-icon>
+    <form (ngSubmit)="onSubmit()" [formGroup]="categoryForm">
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <div fxFlex="150px">
+                <div class="category-img">
+                    <md-icon>local_offer</md-icon>
+                </div>
+                <div class="field-status">
+                    <p><b>Status</b></p>
+                    <md-slide-toggle formControlName="status" required>
+                    </md-slide-toggle>
+                </div>
             </div>
-            <div class="field-status">
-                <p><b>Status</b></p>
-                <md-slide-toggle [(ngModel)]="category.status">
-                </md-slide-toggle>
-            </div>
-        </div>
-        <div fxFlex="100%">
-            <form (ngSubmit)="onSubmit()">
+            <div fxFlex="100%">
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <md-input-container fxFlex="33%">
-                        <input type="text" mdInput placeholder="Name" [(ngModel)]="category.name" name="name">
+                        <input type="text" mdInput placeholder="Name" formControlName="name">
                     </md-input-container>
+                </div>
+                <div *ngIf="categoryForm.controls['name'].invalid && (categoryForm.controls['name'].dirty || categoryForm.controls['name'].touched || formSubmitAttempt)"
+                    class="alert-danger">
+                    <div *ngIf="categoryForm.controls['name'].errors.required">
+                        Name is required
+                    </div>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <md-input-container fxFlex="100%">
-                        <textarea mdInput placeholder="Description" [(ngModel)]="category.description" name="description"></textarea>
+                        <textarea mdInput placeholder="Description" formControlName="description"></textarea>
                     </md-input-container>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
@@ -44,7 +49,7 @@
                         <button md-raised-button class="mat-primary" type="submit">Save</button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 </div>

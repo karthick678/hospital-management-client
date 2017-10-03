@@ -65,7 +65,7 @@ export class DoctorDetailsComponent {
         this.doctorDetailsService.updateDoctorDetails(this.doctor).subscribe(doctor => {
             this.doctor = doctor;
             this.snackBar.open('Update Successfully!', '', {
-                duration: 1000,
+                duration: 100000,
                 extraClasses: ['success-snackbar']
             });
         });

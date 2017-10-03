@@ -9,6 +9,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MomentModule } from 'angular2-moment';
 
+import { FlashMessageModule } from './flash-message/flash-message.module';
+
 import { ModelDialogComponent } from './model-dialog/model-dialog.component';
 import { ModelDialogContentComponent } from './model-dialog-content/model-dialog-content.component';
 import { SubheaderComponent } from './subheader/subheader.component';
@@ -28,6 +30,7 @@ import { APP_DATE_FORMATS } from './date-format/app.date.formats';
         MaterialModule,
         MdNativeDateModule,
         NgxDatatableModule,
+        FlashMessageModule,
         FlexLayoutModule, MomentModule],
     declarations: [SubheaderComponent, UserProfileComponent, ModelDialogComponent, ModelDialogContentComponent],
     providers: [
@@ -39,7 +42,7 @@ import { APP_DATE_FORMATS } from './date-format/app.date.formats';
         }
     ],
     exports: [
-        FormsModule, ReactiveFormsModule, HttpModule, HttpClientModule, CommonModule, MaterialModule, MdNativeDateModule, NgxDatatableModule, FlexLayoutModule, MomentModule, SubheaderComponent, UserProfileComponent, ModelDialogComponent, ModelDialogContentComponent
+        FormsModule, ReactiveFormsModule, HttpModule, HttpClientModule, CommonModule, MaterialModule, MdNativeDateModule, NgxDatatableModule, FlashMessageModule, FlexLayoutModule, MomentModule, SubheaderComponent, UserProfileComponent, ModelDialogComponent, ModelDialogContentComponent
     ]
 })
 export class SharedModule { }
