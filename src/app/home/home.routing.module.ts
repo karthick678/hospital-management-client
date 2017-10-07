@@ -31,12 +31,14 @@ import { CategoryDetailsComponent } from './../medicine/category/details/categor
 
 
 import { AuthGuard } from './../guard/auth.guard';
+import { CanDeactivateGuard } from './../guard/can.deactivate.guard';
 
 const HomeRoutes: Routes = [
     {
         path: 'app',
         component: HomeComponent,
         canActivate: [AuthGuard],
+        canDeactivate: [CanDeactivateGuard],
         children: [
             {
                 path: '',
@@ -92,7 +94,11 @@ const HomeRoutes: Routes = [
                                 path: 'list',
                                 component: CategoryListComponent,
                             },
-                            { path: 'details/:id', component: CategoryDetailsComponent },
+                            {
+                                path: 'details/:id',
+                                component: CategoryDetailsComponent,
+                                canDeactivate: [CanDeactivateGuard],
+                            },
                         ]
                     }
                 ]

@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { HttpClient } from './../../../guard/http.client';
 import { Observable } from "rxjs";
 import 'rxjs/add/operator/map';
@@ -30,9 +30,12 @@ export class CategoryDetailsService {
 
     createCategoryDetails(category: Category): Observable<Category> {
         return this.http.post(AppSettings.API_ENDPOINT + '/createCategoryDetails', category)
-            .map((res) => res.json());
+            .map((res) => res.json()).catch((err: Response) => {
+                return Observable.throw(err.json().error);
+            });
     }
 
+    
     updateCategoryDetails(category: Category): Observable<Category> {
         return this.http.put(AppSettings.API_ENDPOINT + '/updateCategoryDetails/' + category._id, category)
             .map((res) => res.json());

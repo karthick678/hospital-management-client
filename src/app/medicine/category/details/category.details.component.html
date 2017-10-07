@@ -45,7 +45,7 @@
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <div fxFlex="67%"></div>
                     <div fxFlex="33%" class="text-right">
-                        <a md-raised-button routerLink="/app/medicine/category/list">Cancel</a>
+                        <a md-raised-button (click)="goToState('/app/medicine/category/list')">Cancel</a>
                         <button md-raised-button class="mat-primary" type="submit">Save</button>
                     </div>
                 </div>

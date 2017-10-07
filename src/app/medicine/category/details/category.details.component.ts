@@ -3,8 +3,9 @@ import { MdDialog } from '@angular/material';
 import { CategoryDetailsService } from './category.details.service';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Category } from './../../shared/category.model';
-import { ActivatedRoute, Params, Router, Event } from '@angular/router';
+import { ActivatedRoute, Params, Router, Event, RouterStateSnapshot } from '@angular/router';
 import { ModelDialogComponent } from './../../../shared/model-dialog/model-dialog.component';
+import { ModelDialogContentComponent } from './../../../shared/model-dialog-content/model-dialog-content.component';
 import { FlashMessageService } from './../../../shared/flash-message/flash-message.service';
 import { AppSettings } from './../../../app.settings';
 
@@ -17,17 +18,14 @@ import { AppSettings } from './../../../app.settings';
 
 export class CategoryDetailsComponent {
     dismiss: number = AppSettings.alert_dismiss;
+    toState: string;
     id: string;
     formSubmitAttempt: boolean = false;
     categoryName: string;
     categoryForm: FormGroup;
+    isCancel: boolean = false;
 
     constructor(private flashMessageService: FlashMessageService, private categoryDetailsService: CategoryDetailsService, private activatedRoute: ActivatedRoute, private router: Router, public mdDialog: MdDialog, private formBuilder: FormBuilder) {
-        router.events
-            .subscribe((event: Event) => {
-                // some logic.
-
-            });
     }
 
     ngOnInit() {
@@ -60,13 +58,17 @@ export class CategoryDetailsComponent {
     }
 
     createCategory() {
-
         this.categoryDetailsService.createCategoryDetails(this.categoryForm.value).subscribe(category => {
             this.categoryForm.patchValue(category);
-            this.router.navigate(['/app/medicine/category/details/' + this.categoryForm.value._id]);
+            if (!this.toState)
+                this.toState = '/app/medicine/category/details/' + this.categoryForm.value._id;
+            this.isCancel = true;
             this.alertSuccess('Created successfully');
+        }, (error) => {
+            if (error && error.code === 11000) {
+                this.isNameError();
+            }
         });
-
     }
 
     updateCategory() {
@@ -82,7 +84,11 @@ export class CategoryDetailsComponent {
     }
 
     deleteConfirm() {
-        let mdDialog = this.mdDialog.open(ModelDialogComponent);
+        let mdDialog = this.mdDialog.open(ModelDialogComponent, {
+            data: {
+                type: 'delete'
+            }
+        });
         mdDialog.afterClosed().subscribe(isDelete => {
             if (isDelete) {
                 this.deleteCategory();
@@ -118,5 +124,46 @@ export class CategoryDetailsComponent {
             classes: ['success'],
             timeout: this.dismiss
         });
+        if (this.toState)
+            this.router.navigate([this.toState]);
+        else
+            this.toState = '';
+    }
+
+    canDeactivate(next: any) {
+        if (this.categoryForm.dirty && this.categoryForm.status === "VALID" && !this.isCancel) {
+            let mdDialog = this.mdDialog.open(ModelDialogComponent, {
+                disableClose: true,
+                data: { type: 'save' }
+            });
+            mdDialog.afterClosed().subscribe(isSave => {
+                if (isSave) {
+                    this.toState = next.url;
+                    this.onSubmit();
+                } else {
+                    this.categoryForm.markAsPristine();
+                    this.goToState(next.url);
+                }
+            });
+        } else if (this.categoryForm.status !== "VALID" && !this.isCancel) {
+            this.onSubmit();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    isNameError() {
+        this.toState = '';
+        this.mdDialog.open(ModelDialogContentComponent, {
+            data: {
+                message: 'You have entered a name that already exists. Only unique name is allowed'
+            }
+        });
+    }
+
+    goToState(state: string) {
+        this.isCancel = true;
+        this.router.navigate([state]);
     }
 }

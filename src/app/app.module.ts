@@ -1,5 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { MdDialogModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +13,7 @@ import { AppErrorHandler } from "./guard/error.handler";
 
 // Module
 import { AuthGuard } from './guard/auth.guard';
+import { CanDeactivateGuard } from './guard/can.deactivate.guard';
 import { SharedModule } from './shared/shared.module';
 import { ModelDialogComponent } from './shared/model-dialog/model-dialog.component';
 import { ModelDialogContentComponent } from './shared/model-dialog-content/model-dialog-content.component';
@@ -40,13 +41,14 @@ import { AppComponent } from './app.component';
     DoctorModule,
     PatientModule,
     MedicineModule,
-    MdDialogModule
+    MatDialogModule
   ],
   declarations: [
     AppComponent
   ],
   providers: [
     AuthGuard,
+    CanDeactivateGuard,
     HttpClient,
     { provide: ErrorHandler, useClass: AppErrorHandler }],
   entryComponents: [
