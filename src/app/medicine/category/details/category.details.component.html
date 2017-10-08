@@ -2,14 +2,14 @@
     <div>
         <ul class="breadcrumb">
             <li><a class="atag" routerLink="/app/medicine/category/list">Categories</a>
-                <md-icon>chevron_right</md-icon>
+                <mat-icon>chevron_right</mat-icon>
             </li>
             <li>
                 <p>{{ categoryName }}</p>
             </li>
         </ul>
         <div class="float-right">
-            <button md-raised-button class="mat-primary" (click)="deleteConfirm()" *ngIf="categoryForm.value._id">Delete</button>
+            <button mat-raised-button class="mat-primary" (click)="deleteConfirm()" *ngIf="categoryForm.value._id">Delete</button>
         </div>
         <p class="clearfix"></p>
     </div>
@@ -17,19 +17,19 @@
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <div fxFlex="150px">
                 <div class="category-img">
-                    <md-icon>local_offer</md-icon>
+                    <mat-icon>local_offer</mat-icon>
                 </div>
                 <div class="field-status">
                     <p><b>Status</b></p>
-                    <md-slide-toggle formControlName="status" required>
-                    </md-slide-toggle>
+                    <mat-slide-toggle formControlName="status" required>
+                    </mat-slide-toggle>
                 </div>
             </div>
             <div fxFlex="100%">
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-                    <md-input-container fxFlex="33%">
-                        <input type="text" mdInput placeholder="Name" formControlName="name">
-                    </md-input-container>
+                    <mat-input-container fxFlex="33%">
+                        <input type="text" matInput placeholder="Name" formControlName="name">
+                    </mat-input-container>
                 </div>
                 <div *ngIf="categoryForm.controls['name'].invalid && (categoryForm.controls['name'].dirty || categoryForm.controls['name'].touched || formSubmitAttempt)"
                     class="alert-danger">
@@ -38,15 +38,15 @@
                     </div>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-                    <md-input-container fxFlex="100%">
-                        <textarea mdInput placeholder="Description" formControlName="description"></textarea>
-                    </md-input-container>
+                    <mat-input-container fxFlex="100%">
+                        <textarea matInput placeholder="Description" formControlName="description"></textarea>
+                    </mat-input-container>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <div fxFlex="67%"></div>
                     <div fxFlex="33%" class="text-right">
-                        <a md-raised-button (click)="goToState('/app/medicine/category/list')">Cancel</a>
-                        <button md-raised-button class="mat-primary" type="submit">Save</button>
+                        <a mat-raised-button (click)="goToState('/app/medicine/category/list')">Cancel</a>
+                        <button mat-raised-button class="mat-primary" type="submit">Save</button>
                     </div>
                 </div>
             </div>

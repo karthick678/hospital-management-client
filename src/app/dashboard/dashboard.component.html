@@ -6,7 +6,7 @@
     <div fxLayout fxLayout.xs="column" fxLayoutGap="20px" class="blood-group-panel">
         <div fxFlex="260px" class="blood-group-box">
             <div class="blood-group-img">
-                <md-icon>invert_colors</md-icon>
+                <mat-icon>invert_colors</mat-icon>
             </div>
             <p class="blood-group-name">Patient Blood Groups</p>
             <ul class="list-group list-unstyle">
@@ -84,7 +84,7 @@
             <div *ngIf = !activites.length>No data to display</div>
             <div class="activity-box" *ngFor="let activity of activites">
                 <div class="float-left activity-icon">
-                    <md-icon>{{activity.icon}}</md-icon>
+                    <mat-icon>{{activity.icon}}</mat-icon>
                 </div>
                 <div class="float-left">
                     <a class="atag" *ngIf="activity.action !== 'Deleted'" routerLink="{{activity.detailsUrl}}">{{activity.name}}</a>

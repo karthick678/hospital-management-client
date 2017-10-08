@@ -1,51 +1,51 @@
 <main>
-    <md-sidenav-container class="page-sidenav-fab-container">
+    <mat-sidenav-container class="page-sidenav-fab-container">
         <!-- main menu -->
-        <md-sidenav #sidenav mode="side" opened="true" class="page-main-menu">
+        <mat-sidenav #sidenav mode="side" opened="true" class="page-main-menu">
             <img src="./../../assets/images/hm-logo.svg" class="branding" title="Hospial Management" />
             <ul class="list-item">
                 <li>
                     <a routerLink="/app/dashboard" routerLinkActive="active">
-                        <md-icon>dashboard</md-icon>
+                        <mat-icon>dashboard</mat-icon>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li>
                     <a routerLink="/app/doctor" routerLinkActive="active">
-                        <md-icon>group_add</md-icon>
+                        <mat-icon>group_add</mat-icon>
                         <p>Doctors</p>
                     </a>
                 </li>
                 <li>
                     <a routerLink="/app/patient" routerLinkActive="active">
-                        <md-icon>perm_identity</md-icon>
+                        <mat-icon>perm_identity</mat-icon>
                         <p>Patients</p>
                     </a>
                 </li>
                 <li>
                     <a routerLink="/app/medicine" routerLinkActive="active">
-                        <md-icon>add_shopping_cart</md-icon>
+                        <mat-icon>add_shopping_cart</mat-icon>
                         <p>Medicines</p>
                     </a>
                 </li>
             </ul>
             <div class="user-info">
-                <button [mdMenuTriggerFor]="menu"><md-icon>person</md-icon></button>
-                <md-menu #menu="mdMenu">
-                    <button md-menu-item (click)="userProfileOpen(userProfile)">View Profile</button>
-                    <button md-menu-item (click)="logout()">Logout</button>
-                </md-menu>
+                <button [matMenuTriggerFor]="menu"><mat-icon>person</mat-icon></button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="userProfileOpen(userProfile)">View Profile</button>
+                    <button mat-menu-item (click)="logout()">Logout</button>
+                </mat-menu>
             </div>
-        </md-sidenav>
+        </mat-sidenav>
         <!-- page content -->
         <div class="page-content">
             <router-outlet></router-outlet>
         </div>
-    </md-sidenav-container>
+    </mat-sidenav-container>
     <div class="main-overlay" *ngIf="isShowUserProfile" (click)="userProfileOpen(userProfile)">
     </div>
-    <md-sidenav #userProfile class="user-profile-panel">
+    <mat-sidenav #userProfile class="user-profile-panel">
         <user-profile></user-profile>
-    </md-sidenav>
+    </mat-sidenav>
     <flash-message></flash-message>
 </main>

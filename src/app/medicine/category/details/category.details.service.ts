@@ -35,10 +35,12 @@ export class CategoryDetailsService {
             });
     }
 
-    
+
     updateCategoryDetails(category: Category): Observable<Category> {
         return this.http.put(AppSettings.API_ENDPOINT + '/updateCategoryDetails/' + category._id, category)
-            .map((res) => res.json());
+            .map((res) => res.json()).catch((err: Response) => {
+                return Observable.throw(err.json().error);
+            });
     }
 
     deleteCategory(id: string) {

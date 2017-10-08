@@ -1,26 +1,26 @@
 <div class="patient-report-basic-info-component">
     <div class="profile-user-img">
-        <md-icon>account_box</md-icon>
+        <mat-icon>account_box</mat-icon>
     </div>
     <p class="profile-user-name">{{patient.name.first}}</p>
     <ul class="list-group list-unstyle">
         <li class="list-group-item">
-            <b><md-icon>supervisor_account</md-icon>Gender</b><span>{{patient.gender}}</span>
+            <b><mat-icon>supervisor_account</mat-icon>Gender</b><span>{{patient.gender}}</span>
         </li>
         <li class="list-group-item">
-            <b><md-icon>invert_colors</md-icon> Group</b> <span>{{patient.bloodGroup}}</span>
+            <b><mat-icon>invert_colors</mat-icon> Group</b> <span>{{patient.bloodGroup}}</span>
         </li>
         <li class="list-group-item">
-            <b><md-icon>date_range</md-icon> Date</b> <span>{{patient.dob | date: 'dd-MMM-yyyy'}}</span>
+            <b><mat-icon>date_range</mat-icon> Date</b> <span>{{patient.dob | date: 'dd-MMM-yyyy'}}</span>
         </li>
         <li class="list-group-item">
-            <b><md-icon>smartphone</md-icon>Mobile Number</b> <span>{{patient.mobileNumber}}</span>
+            <b><mat-icon>smartphone</mat-icon>Mobile Number</b> <span>{{patient.mobileNumber}}</span>
         </li>
         <li class="list-group-item">
-            <b><md-icon>phone</md-icon>Phone Number</b> <span>{{patient.phoneNumber}}</span>
+            <b><mat-icon>phone</mat-icon>Phone Number</b> <span>{{patient.phoneNumber}}</span>
         </li>
         <li class="list-group-item">
-            <b><md-icon>location_on</md-icon>Address</b>
+            <b><mat-icon>location_on</mat-icon>Address</b>
             <span>{{patient.address.address1 + ' ' + patient.address.address2 + ' ' + patient.address.city + ' ' + '-' + patient.address.pincode + ' ' + patient.address.state}}</span>
         </li>
     </ul>

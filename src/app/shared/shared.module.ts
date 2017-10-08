@@ -4,7 +4,22 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from "@angular/common/http";
 import { CommonModule } from '@angular/common';
 
-import { MaterialModule, MdNativeDateModule, DateAdapter, MD_DATE_FORMATS } from '@angular/material';
+import { 
+    MatIconModule,
+    MatDialogModule,
+    MatMenuModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatCardModule,
+    MatSidenavModule,
+    MatSnackBarModule,
+    MatCheckboxModule,
+    MatNativeDateModule, DateAdapter, MAT_DATE_FORMATS
+ } from '@angular/material';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MomentModule } from 'angular2-moment';
@@ -22,13 +37,25 @@ import { APP_DATE_FORMATS } from './date-format/app.date.formats';
 
 @NgModule({
     imports: [
+        MatIconModule,
+        MatDialogModule,
+        MatMenuModule,
+        MatInputModule, 
+        MatSelectModule,
+        MatSlideToggleModule,       
+        MatDatepickerModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatCardModule,
+        MatSidenavModule,
+        MatSnackBarModule, 
+        MatCheckboxModule,       
         FormsModule,
         ReactiveFormsModule,
         HttpModule,
         HttpClientModule,
         CommonModule,
-        MaterialModule,
-        MdNativeDateModule,
+        MatNativeDateModule,
         NgxDatatableModule,
         FlashMessageModule,
         FlexLayoutModule, MomentModule],
@@ -38,11 +65,24 @@ import { APP_DATE_FORMATS } from './date-format/app.date.formats';
             provide: DateAdapter, useClass: AppDateAdapter
         },
         {
-            provide: MD_DATE_FORMATS, useValue: APP_DATE_FORMATS
+            provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
         }
     ],
     exports: [
-        FormsModule, ReactiveFormsModule, HttpModule, HttpClientModule, CommonModule, MaterialModule, MdNativeDateModule, NgxDatatableModule, FlashMessageModule, FlexLayoutModule, MomentModule, SubheaderComponent, UserProfileComponent, ModelDialogComponent, ModelDialogContentComponent
+        MatIconModule,
+        MatDialogModule,
+        MatMenuModule,
+        MatInputModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatDatepickerModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatCardModule,
+        MatSidenavModule,
+        MatSnackBarModule,
+        MatCheckboxModule,
+        FormsModule, ReactiveFormsModule, HttpModule, HttpClientModule, CommonModule, MatNativeDateModule, NgxDatatableModule, FlashMessageModule, FlexLayoutModule, MomentModule, SubheaderComponent, UserProfileComponent, ModelDialogComponent, ModelDialogContentComponent
     ]
 })
 export class SharedModule { }

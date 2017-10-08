@@ -4,13 +4,13 @@
             <div fxFlex="100%">
                 <sub-header [title]="'Checkup History'" class="float-left"></sub-header>
             </div>
-             <md-select fxFlex="100px" class="field-search" [(ngModel)]="page.size" name="pageSize" (change)="getCheckupss({ offset: 0 })">
-                <md-option *ngFor="let list of pageSizeList" [value]="list.value">
+             <mat-select fxFlex="100px" class="field-search" [(ngModel)]="page.size" name="pageSize" (change)="getCheckupss({ offset: 0 })">
+                <mat-option *ngFor="let list of pageSizeList" [value]="list.value">
                     {{ list.name }}
-                </md-option>
-            </md-select> 
+                </mat-option>
+            </mat-select> 
             <div fxFlex="150px">
-                <button md-raised-button class="float-right mat-info" routerLink="/app/patient/checkup/{{patientId}}/new">New Checkup</button>
+                <button mat-raised-button class="float-right mat-info" routerLink="/app/patient/checkup/{{patientId}}/new">New Checkup</button>
             </div>
         </div>
     </div>
@@ -30,12 +30,12 @@
                 Doctor : {{row.doctorName}}
             </span>
                 <span class="time-label-button">
-                <button md-button routerLink="/app/patient/checkup/{{row.patientId}}/{{row._id}}"><md-icon>edit</md-icon></button>
-                <button md-button (click)="openmdDialog(row)"><md-icon>delete_forever</md-icon></button>
+                <button mat-button routerLink="/app/patient/checkup/{{row.patientId}}/{{row._id}}"><mat-icon>edit</mat-icon></button>
+                <button mat-button (click)="openmatDialog(row)"><mat-icon>delete_forever</mat-icon></button>
             </span>
             </li>
             <li>
-                <md-icon class="timeline-icon">accessibility</md-icon>
+                <mat-icon class="timeline-icon">accessibility</mat-icon>
                 <div class="timeline-item">
                     <h4 class="timeline-header">Symptoms</h4>
                     <div class="timeline-body">
@@ -44,7 +44,7 @@
                 </div>
             </li>
             <li>
-                <md-icon class="timeline-icon">format_color_fill</md-icon>
+                <mat-icon class="timeline-icon">format_color_fill</mat-icon>
                 <div class="timeline-item">
                     <h4 class="timeline-header">Diagnosis</h4>
                     <div class="timeline-body">
@@ -53,7 +53,7 @@
                 </div>
             </li>
             <li>
-                <md-icon class="timeline-icon">add_shopping_cart</md-icon>
+                <mat-icon class="timeline-icon">add_shopping_cart</mat-icon>
                 <div class="timeline-item">
                     <h4 class="timeline-header">Prescription</h4>
                     <div class="timeline-body">
@@ -84,7 +84,7 @@
                 </div>
             </li>
             <li>
-                <md-icon class="timeline-icon">event_note</md-icon>
+                <mat-icon class="timeline-icon">event_note</mat-icon>
                 <div class="timeline-item extra-note">
                     <h4 class="timeline-header">Extra Note</h4>
                     <div class="timeline-body">

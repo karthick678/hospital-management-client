@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { CategoryDetailsService } from './category.details.service';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Category } from './../../shared/category.model';
@@ -25,7 +25,7 @@ export class CategoryDetailsComponent {
     categoryForm: FormGroup;
     isCancel: boolean = false;
 
-    constructor(private flashMessageService: FlashMessageService, private categoryDetailsService: CategoryDetailsService, private activatedRoute: ActivatedRoute, private router: Router, public mdDialog: MdDialog, private formBuilder: FormBuilder) {
+    constructor(private flashMessageService: FlashMessageService, private categoryDetailsService: CategoryDetailsService, private activatedRoute: ActivatedRoute, private router: Router, public matDialog: MatDialog, private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
@@ -77,6 +77,10 @@ export class CategoryDetailsComponent {
                 this.categoryForm.patchValue(category);
                 this.alertSuccess('Updated successfully');
                 this.categoryForm.markAsPristine();
+            }, (error) => {
+                if (error && error.code === 11000) {
+                    this.isNameError();
+                }
             });
         } else {
             this.alertError();
@@ -84,12 +88,12 @@ export class CategoryDetailsComponent {
     }
 
     deleteConfirm() {
-        let mdDialog = this.mdDialog.open(ModelDialogComponent, {
+        let matDialog = this.matDialog.open(ModelDialogComponent, {
             data: {
                 type: 'delete'
             }
         });
-        mdDialog.afterClosed().subscribe(isDelete => {
+        matDialog.afterClosed().subscribe(isDelete => {
             if (isDelete) {
                 this.deleteCategory();
             }
@@ -132,11 +136,11 @@ export class CategoryDetailsComponent {
 
     canDeactivate(next: any) {
         if (this.categoryForm.dirty && this.categoryForm.status === "VALID" && !this.isCancel) {
-            let mdDialog = this.mdDialog.open(ModelDialogComponent, {
+            let matDialog = this.matDialog.open(ModelDialogComponent, {
                 disableClose: true,
                 data: { type: 'save' }
             });
-            mdDialog.afterClosed().subscribe(isSave => {
+            matDialog.afterClosed().subscribe(isSave => {
                 if (isSave) {
                     this.toState = next.url;
                     this.onSubmit();
@@ -155,7 +159,7 @@ export class CategoryDetailsComponent {
 
     isNameError() {
         this.toState = '';
-        this.mdDialog.open(ModelDialogContentComponent, {
+        this.matDialog.open(ModelDialogContentComponent, {
             data: {
                 message: 'You have entered a name that already exists. Only unique name is allowed'
             }

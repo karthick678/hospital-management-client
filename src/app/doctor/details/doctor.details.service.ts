@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { HttpClient } from './../../guard/http.client';
 import { Observable } from "rxjs";
 import 'rxjs/add/operator/map';
@@ -37,14 +37,16 @@ export class DoctorDetailsService {
 
     createDoctorDetails(doctor: Doctor): Observable<Doctor> {
         return this.http.post(AppSettings.API_ENDPOINT + '/createDoctorDetails', doctor)
-            .map((res) => res.json()).catch((error: any) => {
-                return Observable.throw(new Error(error));
+            .map((res) => res.json()).catch((err: Response) => {
+                return Observable.throw(err.json().error);
             });
     }
 
     updateDoctorDetails(doctor: Doctor): Observable<Doctor> {
         return this.http.put(AppSettings.API_ENDPOINT + '/updateDoctorDetails/' + doctor._id, doctor)
-            .map((res) => res.json());
+            .map((res) => res.json()).catch((err: Response) => {
+                return Observable.throw(err.json().error);
+            });
     }
 
     deleteDoctor(id: string) {

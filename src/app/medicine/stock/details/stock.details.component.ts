@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { StockDetailsService } from './stock.details.service';
 import { Stock } from './../../shared/stock.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModelDialogComponent } from './../../../shared/model-dialog/model-dialog.component';
+import { ModelDialogContentComponent } from './../../../shared/model-dialog-content/model-dialog-content.component';
+import { FlashMessageService } from './../../../shared/flash-message/flash-message.service';
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { AppSettings } from './../../../app.settings';
 
 @Component({
     selector: 'stock-details',
@@ -14,18 +17,23 @@ import { ModelDialogComponent } from './../../../shared/model-dialog/model-dialo
 })
 
 export class StockDetailsComponent {
-    stock: Stock;
+    dismiss: number = AppSettings.alert_dismiss;
+    toState: string;
     id: string;
+    formSubmitAttempt: boolean = false;
     stockName: string;
     categoriesList = [{ name: 'Analgesico', value: 'Analgesico' }];
+    stockForm: FormGroup;
+    isCancel: boolean = false;
 
-    constructor(public snackBar: MdSnackBar, private stockDetailsService: StockDetailsService, private activatedRoute: ActivatedRoute, private router: Router, public mdDialog: MdDialog) {
+    constructor(private flashMessageService: FlashMessageService, private stockDetailsService: StockDetailsService, private activatedRoute: ActivatedRoute, private router: Router, public matDialog: MatDialog, private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
+            this.buildForm();
             this.id = this.activatedRoute.snapshot.params['id'];
-            this.stock = this.stockDetailsService.sampleStock();
+            this.stockForm.setValue(this.stockDetailsService.sampleStock());
             if (this.id !== 'new')
                 this.getStockDetails();
             else
@@ -35,38 +43,54 @@ export class StockDetailsComponent {
 
     getStockDetails() {
         this.stockDetailsService.getStockDetails(this.id).subscribe(stock => {
-            this.stock = stock;
-            this.stockName = this.stock.name;
+            this.stockForm.patchValue(stock);
+            this.stockName = this.stockForm.value.name;
         });
     }
 
     onSubmit() {
-        if (this.stock._id)
-            this.updateStock();
-        else
-            this.createStock();
+        this.formSubmitAttempt = true;
+        if (this.stockForm.status === "VALID") {
+            if (this.stockForm.value._id)
+                this.updateStock();
+            else
+                this.createStock();
+        }
     }
 
     createStock() {
-        this.stockDetailsService.createStockDetails(this.stock).subscribe(stock => {
-            this.stock = stock;
-            this.router.navigate(['/app/medicine/stock/details/' + this.stock._id]);
+        this.stockDetailsService.createStockDetails(this.stockForm.value).subscribe(stock => {
+            this.stockForm.patchValue(stock);
+            if (!this.toState)
+                this.toState = '/app/medicine/stock/details/' + this.stockForm.value._id;
+            this.isCancel = true;
+            this.alertSuccess('Created successfully');
+        }, (error) => {
+            if (error && error.code === 11000) {
+                this.isNameError();
+            }
         });
     }
 
     updateStock() {
-        this.stockDetailsService.updateStockDetails(this.stock).subscribe(stock => {
-            this.stock = stock;
-            this.snackBar.open('Update Successfully!', '', {
-                duration: 1000,
-                extraClasses: ['success-snackbar']
+        if (this.stockForm.dirty) {
+            this.stockDetailsService.updateStockDetails(this.stockForm.value).subscribe(stock => {
+                this.stockForm.patchValue(stock);
+                this.alertSuccess('Updated successfully');
+                this.stockForm.markAsPristine();
+            }, (error) => {
+                if (error && error.code === 11000) {
+                    this.isNameError();
+                }
             });
-        });
+        } else {
+            this.alertError();
+        }
     }
 
     deleteConfirm() {
-        let mdDialog = this.mdDialog.open(ModelDialogComponent);
-        mdDialog.afterClosed().subscribe(isDelete => {
+        let matDialog = this.matDialog.open(ModelDialogComponent);
+        matDialog.afterClosed().subscribe(isDelete => {
             if (isDelete) {
                 this.deleteStock();
             }
@@ -74,9 +98,80 @@ export class StockDetailsComponent {
     }
 
     deleteStock() {
-        let id = this.stock._id;
+        let id = this.stockForm.value._id;
         this.stockDetailsService.deleteStock(id).subscribe(res => {
             this.router.navigate(['/app/medicine/stock/list']);
         });
+    }
+
+    buildForm() {
+        this.stockForm = this.formBuilder.group({
+            _id: '',
+            name: ['', Validators.compose([Validators.required])],
+            category: ['', Validators.compose([Validators.required])],
+            price: '',
+            qty: '',
+            genericName: '',
+            company: '',
+            description: '',
+            effects: '',
+            expireDate: ['', Validators.compose([Validators.required])],
+            status: ['', Validators.compose([Validators.required])]
+        });
+    }
+
+    alertError() {
+        this.flashMessageService.show('Please update a field to save the page content', {
+            classes: ['error'],
+            timeout: this.dismiss
+        });
+    }
+
+    alertSuccess(message: string) {
+        this.flashMessageService.show(message, {
+            classes: ['success'],
+            timeout: this.dismiss
+        });
+        if (this.toState)
+            this.router.navigate([this.toState]);
+        else
+            this.toState = '';
+    }
+
+    canDeactivate(next: any) {
+        if (this.stockForm.dirty && this.stockForm.status === "VALID" && !this.isCancel) {
+            let matDialog = this.matDialog.open(ModelDialogComponent, {
+                disableClose: true,
+                data: { type: 'save' }
+            });
+            matDialog.afterClosed().subscribe(isSave => {
+                if (isSave) {
+                    this.toState = next.url;
+                    this.onSubmit();
+                } else {
+                    this.stockForm.markAsPristine();
+                    this.goToState(next.url);
+                }
+            });
+        } else if (this.stockForm.status !== "VALID" && !this.isCancel) {
+            this.onSubmit();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    isNameError() {
+        this.toState = '';
+        this.matDialog.open(ModelDialogContentComponent, {
+            data: {
+                message: 'You have entered a name that already exists. Only unique name is allowed'
+            }
+        });
+    }
+
+    goToState(state: string) {
+        this.isCancel = true;
+        this.router.navigate([state]);
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { HttpClient } from './../../../guard/http.client';
 import { Observable } from "rxjs";
 import 'rxjs/add/operator/map';
@@ -20,7 +20,7 @@ export class StockDetailsService {
             category: '',
             status: true,
             price: '',
-            qty: '',
+            qty: 0,
             genericName: '',
             company: '',
             effects: '',
@@ -37,12 +37,16 @@ export class StockDetailsService {
 
     createStockDetails(stock: Stock): Observable<Stock> {
         return this.http.post(AppSettings.API_ENDPOINT + '/createStockDetails', stock)
-            .map((res) => res.json());
+            .map((res) => res.json()).catch((err: Response) => {
+                return Observable.throw(err.json().error);
+            });
     }
 
     updateStockDetails(stock: Stock): Observable<Stock> {
         return this.http.put(AppSettings.API_ENDPOINT + '/updateStockDetails/' + stock._id, stock)
-            .map((res) => res.json());
+            .map((res) => res.json()).catch((err: Response) => {
+                return Observable.throw(err.json().error);
+            });
     }
 
     deleteStock(id: string) {

@@ -1,6 +1,3 @@
-<!-- <div class="alert" *ngFor='let message of messages; let key = index' [ngClass]="message.options.classes">
-    <p></p>
-</div> -->
 <ul class="alert-message list-unstyle">
-    <li *ngFor='let message of messages; let key = index' [ngClass]="message.options.classes"><a>{{ message.text }}<md-icon (click)="removeFlexMessage(index)">clear</md-icon></a></li>
+    <li *ngFor='let message of messages; let key = index' [ngClass]="message.options.classes"><a>{{ message.text }}<mat-icon class="material-icons" (click)="removeFlexMessage(index)">clear</mat-icon></a></li>
 </ul>

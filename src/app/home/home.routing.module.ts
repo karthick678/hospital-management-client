@@ -55,7 +55,11 @@ const HomeRoutes: Routes = [
                 children: [
                     { path: '', redirectTo: 'list', pathMatch: 'full' },
                     { path: 'list', component: DoctorListComponent },
-                    { path: 'details/:id', component: DoctorDetailsComponent },
+                    {
+                        path: 'details/:id',
+                        component: DoctorDetailsComponent,
+                        canDeactivate: [CanDeactivateGuard]
+                    },
                 ]
             },
             {
@@ -83,7 +87,11 @@ const HomeRoutes: Routes = [
                                 path: 'list',
                                 component: StockListComponent,
                             },
-                            { path: 'details/:id', component: StockDetailsComponent },
+                            {
+                                path: 'details/:id',
+                                component: StockDetailsComponent,
+                                canDeactivate: [CanDeactivateGuard]
+                            },
                         ]
                     },
                     {

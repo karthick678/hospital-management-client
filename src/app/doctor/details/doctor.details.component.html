@@ -2,69 +2,100 @@
     <div>
         <ul class="breadcrumb">
             <li><a class="atag" routerLink="/app/doctor/list">Doctors</a>
-                <md-icon>chevron_right</md-icon>
+                <mat-icon>chevron_right</mat-icon>
             </li>
             <li>
                 <p>{{doctorName}}</p>
             </li>
         </ul>
         <div class="float-right">
-            <button md-raised-button (click)="deleteConfirm()" *ngIf="doctor._id">Delete</button>
-            <button md-raised-button class="mat-primary" routerLink="/app/doctor/details/new">New Doctor</button>
+            <button mat-raised-button class="mat-primary" (click)="deleteConfirm()" *ngIf="doctorForm.value._id">Delete</button>
         </div>
         <p class="clearfix"></p>
     </div>
-    <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-        <div fxFlex="150px">
-            <div class="profile-user-img">
-                <md-icon>account_box</md-icon>
+    <form (ngSubmit)="onSubmit()" [formGroup]="doctorForm">
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <div fxFlex="150px">
+                <div class="profile-user-img">
+                    <mat-icon>account_box</mat-icon>
+                </div>
+                <div class="field-status">
+                    <p><b>Status</b></p>
+                    <mat-slide-toggle formControlName="status">
+                    </mat-slide-toggle>
+                </div>
             </div>
-            <div class="field-status">
-                <p><b>Status</b></p>
-                <md-slide-toggle [(ngModel)]="doctor.status">
-                </md-slide-toggle>
-            </div>
-        </div>
-        <div fxFlex="100%">
-            <form (ngSubmit)="onSubmit()">
-                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-                    <md-input-container fxFlex="33%">
-                        <input type="text" mdInput placeholder="First Name" [(ngModel)]="doctor.name.first" name="first">
-                    </md-input-container>
-                    <md-input-container fxFlex="33%">
-                        <input mdInput placeholder="Middle Name" [(ngModel)]="doctor.name.middle" name="middle">
-                    </md-input-container>
-                    <md-input-container fxFlex="33%">
-                        <input mdInput placeholder="Last Name" [(ngModel)]="doctor.name.last" name="last">
-                    </md-input-container>
+            <div fxFlex="100%">
+                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" formGroupName="name">
+                    <div fxFlex="33%">
+                        <mat-input-container class="width-100">
+                            <input type="text" matInput placeholder="First Name" formControlName="first" name="first" required>
+                        </mat-input-container>
+                        <div *ngIf="doctorForm.controls['name'].controls['first'].invalid && (doctorForm.controls['name'].controls['first'].dirty || doctorForm.controls['name'].controls['first'].touched || formSubmitAttempt)"
+                            class="alert-danger">
+                            <div *ngIf="doctorForm.controls['name'].controls['first'].errors.required">
+                                First name is required
+                            </div>
+                        </div>
+                    </div>
+                    <mat-input-container fxFlex="33%">
+                        <input matInput placeholder="Middle Name" formControlName="middle">
+                    </mat-input-container>
+                    <mat-input-container fxFlex="33%">
+                        <input matInput placeholder="Last Name" formControlName="last">
+                    </mat-input-container>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-                    <md-input-container fxFlex="33%">
-                        <input mdInput placeholder="Email" [(ngModel)]="doctor.email" name="email">
-                    </md-input-container>
-                    <md-select placeholder="Gender" fxFlex="33%" class="field-gender" [(ngModel)]="doctor.gender" name="gender">
-                        <md-option *ngFor="let gender of genderList" [value]="gender.value">
-                            {{ gender.viewValue }}
-                        </md-option>
-                    </md-select>
-                    <md-input-container fxFlex="33%">
-                        <span mdPrefix>+91 &nbsp;</span>
-                        <input mdInput placeholder="Mobile Number" [(ngModel)]="doctor.mobileNumber" name="mobileNumber">
-                    </md-input-container>
+                    <div fxFlex="33%">
+                        <mat-input-container class="width-100">
+                            <input matInput placeholder="Email" formControlName="email" required>
+                        </mat-input-container>
+                        <div *ngIf="doctorForm.controls['email'].invalid && (doctorForm.controls['email'].dirty || doctorForm.controls['email'].touched || formSubmitAttempt)"
+                            class="alert-danger">
+                            <div *ngIf="doctorForm.controls['email'].errors.required">
+                                Email is required
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="33%">
+                        <mat-select placeholder="Gender" class="field-gender width-100" formControlName="gender" required>
+                            <mat-option *ngFor="let list of genderList" [value]="list.value">
+                                {{ list.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                        <div *ngIf="doctorForm.controls['gender'].invalid && (doctorForm.controls['gender'].dirty || doctorForm.controls['mobileNumber'].touched || formSubmitAttempt)"
+                            class="alert-danger">
+                            <div *ngIf="doctorForm.controls['gender'].errors.required">
+                                Gender is required
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="33%">
+                        <mat-input-container class="width-100">
+                            <span matPrefix>+91 &nbsp;</span>
+                            <input type="number" matInput placeholder="Mobile Number" formControlName="mobileNumber" required>
+                        </mat-input-container>
+                        <div *ngIf="doctorForm.controls['mobileNumber'].invalid && (doctorForm.controls['mobileNumber'].dirty || doctorForm.controls['mobileNumber'].touched || formSubmitAttempt)"
+                            class="alert-danger">
+                            <div *ngIf="doctorForm.controls['mobileNumber'].errors.required">
+                                Mobile number is required
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-                    <md-input-container fxFlex="33%">
-                        <input mdInput placeholder="Home Phone" [(ngModel)]="doctor.phoneNumber" name="phoneNumber">
-                    </md-input-container>
+                    <mat-input-container fxFlex="33%">
+                        <input matInput placeholder="Home Phone" formControlName="phoneNumber">
+                    </mat-input-container>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <div fxFlex="67%"></div>
                     <div fxFlex="33%" class="text-right">
-                        <a md-raised-button routerLink="/app/doctor/list">Cancel</a>
-                        <button md-raised-button class="mat-primary" type="submit">Save</button>
+                        <a mat-raised-button (click)="goToState('/app/doctor/list')">Cancel</a>
+                        <button mat-raised-button class="mat-primary" type="submit">Save</button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
