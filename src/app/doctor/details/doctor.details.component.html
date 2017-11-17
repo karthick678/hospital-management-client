@@ -58,11 +58,13 @@
                         </div>
                     </div>
                     <div fxFlex="33%">
-                        <mat-select placeholder="Gender" class="field-gender width-100" formControlName="gender" required>
-                            <mat-option *ngFor="let list of genderList" [value]="list.value">
-                                {{ list.viewValue }}
-                            </mat-option>
-                        </mat-select>
+                        <mat-form-field class="width-100">
+                            <mat-select placeholder="Gender" class="field-gender width-100" formControlName="gender" required>
+                                <mat-option *ngFor="let list of genderList" [value]="list.value">
+                                    {{ list.viewValue }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                         <div *ngIf="doctorForm.controls['gender'].invalid && (doctorForm.controls['gender'].dirty || doctorForm.controls['mobileNumber'].touched || formSubmitAttempt)"
                             class="alert-danger">
                             <div *ngIf="doctorForm.controls['gender'].errors.required">

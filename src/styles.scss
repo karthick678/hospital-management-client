@@ -36,15 +36,6 @@
       font-size: 14px;
       font-weight: 500;
     }
-    .mat-select {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.42);
-      margin-bottom: 1.0rem;
-      &.ng-invalid {
-        &.ng-touched {
-          border-color: red;
-        }
-      }
-    }
     .alert-danger {
       color: #d50000;
       min-height: 16px;

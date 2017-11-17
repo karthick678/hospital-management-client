@@ -36,28 +36,25 @@
                     </mat-input-container>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-                    <!-- <div fxFlex="33%">
-                        <mat-input-container fxFlex="100%">
-                            <input matInput [matDatepicker]="picker" placeholder="Date Of Birth" [(ngModel)]="patient.dob" name="dob">
-                            <button matSuffix [matDatepickerToggle]="picker"></button>
-                        </mat-input-container>
-                        <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
-                    </div> -->
                     <mat-form-field fxFlex="33%">
                         <input matInput [matDatepicker]="picker" placeholder="Date Of Birth" [(ngModel)]="patient.dob" name="dob">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    <mat-select placeholder="Gender" fxFlex="33%" class="field-select" [(ngModel)]="patient.gender" name="gender">
-                        <mat-option *ngFor="let gender of genderList" [value]="gender.value">
-                            {{ gender.viewValue }}
-                        </mat-option>
-                    </mat-select>
-                    <mat-select placeholder="Blood Group" fxFlex="33%" class="field-select" [(ngModel)]="patient.bloodGroup" name="bloodGroup">
-                        <mat-option *ngFor="let blodGroup of bloodGroupsList" [value]="blodGroup.value">
-                            {{ blodGroup.viewValue }}
-                        </mat-option>
-                    </mat-select>
+                    <mat-form-field fxFlex="33%">
+                        <mat-select placeholder="Gender" class="field-select" [(ngModel)]="patient.gender" name="gender">
+                            <mat-option *ngFor="let gender of genderList" [value]="gender.value">
+                                {{ gender.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="33%">
+                        <mat-select placeholder="Blood Group" class="field-select" [(ngModel)]="patient.bloodGroup" name="bloodGroup">
+                            <mat-option *ngFor="let blodGroup of bloodGroupsList" [value]="blodGroup.value">
+                                {{ blodGroup.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <mat-input-container fxFlex="33%">

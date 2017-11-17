@@ -95,7 +95,11 @@ export class DoctorDetailsComponent {
 
 
     deleteConfirm() {
-        let matDialog = this.matDialog.open(ModelDialogComponent);
+        let matDialog = this.matDialog.open(ModelDialogComponent, {
+            data: {
+                type: 'delete'
+            }
+        });
         matDialog.afterClosed().subscribe(isDelete => {
             if (isDelete) {
                 this.deleteDoctor();
@@ -106,6 +110,7 @@ export class DoctorDetailsComponent {
     deleteDoctor() {
         let id = this.doctorForm.value._id;
         this.doctorDetailsService.deleteDoctor(id).subscribe(res => {
+            this.alertSuccess('Deleted successfully');
             this.router.navigate(['/app/doctor/list']);
         });
     }

@@ -103,6 +103,7 @@ export class CategoryDetailsComponent {
     deleteCategory() {
         let id = this.categoryForm.value._id;
         this.categoryDetailsService.deleteCategory(id).subscribe(res => {
+            this.alertSuccess('Deleted successfully');
             this.router.navigate(['/app/medicine/category/list']);
         });
     }

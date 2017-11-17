@@ -12,16 +12,20 @@
             <form (ngSubmit)="onSubmit()">
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <div fxFlex="100%"></div>
-                    <mat-select fxFlex="120px" class="field-search" [(ngModel)]="page.size" name="pageSize" (change)="setPage({ offset: 0 })">
-                        <mat-option *ngFor="let list of pageSizeList" [value]="list.value">
-                            {{ list.name }}
-                        </mat-option>
-                    </mat-select>
-                    <mat-select fxFlex="20%" class="field-search" [(ngModel)]="searchAttribute" name="searchAttribute">
-                        <mat-option *ngFor="let list of searchList" [value]="list.value">
-                            {{ list.viewValue }}
-                        </mat-option>
-                    </mat-select>
+                    <mat-form-field fxFlex="120px">
+                        <mat-select class="field-search" [(ngModel)]="page.size" name="pageSize" (change)="setPage({ offset: 0 })">
+                            <mat-option *ngFor="let list of pageSizeList" [value]="list.value">
+                                {{ list.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="20%">
+                        <mat-select class="field-search" [(ngModel)]="searchAttribute" name="searchAttribute">
+                            <mat-option *ngFor="let list of searchList" [value]="list.value">
+                                {{ list.viewValue }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                     <mat-input-container fxFlex="20%">
                         <input type="text" matInput [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}">
                         <mat-icon matSuffix>search</mat-icon>
