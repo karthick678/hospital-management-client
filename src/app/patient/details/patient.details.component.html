@@ -8,90 +8,117 @@
                 <p>{{patientName}}</p>
             </li>
         </ul>
-        <button mat-raised-button class="float-right mat-primary" routerLink="/app/patient/details/new">New Patient</button>
+        <div class="float-right"> 
+            <button mat-button routerLink="/app/patient/report/{{patientForm.value._id}}" *ngIf="patientForm.value._id">Checkup</button>
+            <button mat-raised-button class="mat-primary" (click)="deleteConfirm()" *ngIf="patientForm.value._id">Delete</button>
+        </div>
         <p class="clearfix"></p>
     </div>
-    <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-        <div fxFlex="150px">
-            <div class="profile-user-img">
-                <mat-icon>perm_identity</mat-icon>
+    <form (ngSubmit)="onSubmit()" [formGroup]="patientForm">
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <div fxFlex="150px">
+                <div class="profile-user-img">
+                    <mat-icon>perm_identity</mat-icon>
+                </div>
+                <div class="field-status">
+                    <p><b>Status</b></p>
+                    <mat-slide-toggle formControlName="status" required>
+                    </mat-slide-toggle>
+                </div>
             </div>
-            <div class="field-status">
-                <p><b>Status</b></p>
-                <mat-slide-toggle [(ngModel)]="patient.status">
-                </mat-slide-toggle>
-            </div>
-        </div>
-        <div fxFlex="100%">
-            <form (ngSubmit)="onSubmit()">
-                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <div fxFlex="100%">
+                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" formGroupName="name">
+                    <div fxFlex="33%">
+                        <mat-input-container class="width-100">
+                            <input type="text" matInput placeholder="First Name" formControlName="first">
+                        </mat-input-container>
+                        <div *ngIf="patientForm.controls['name'].controls['first'].invalid && (patientForm.controls['name'].controls['first'].dirty || patientForm.controls['name'].controls['first'].touched || formSubmitAttempt)"
+                            class="alert-danger">
+                            <div *ngIf="patientForm.controls['name'].controls['first'].errors.required">
+                                First name is required
+                            </div>
+                        </div>
+                    </div>
                     <mat-input-container fxFlex="33%">
-                        <input type="text" required matInput placeholder="First Name" [(ngModel)]="patient.name.first" name="first">
+                        <input matInput placeholder="Middle Name" formControlName="middle" name="middle">
                     </mat-input-container>
                     <mat-input-container fxFlex="33%">
-                        <input matInput placeholder="Middle Name" [(ngModel)]="patient.name.middle" name="middle">
-                    </mat-input-container>
-                    <mat-input-container fxFlex="33%">
-                        <input matInput placeholder="Last Name" [(ngModel)]="patient.name.last" name="last">
+                        <input matInput placeholder="Last Name" formControlName="last" name="last">
                     </mat-input-container>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <mat-form-field fxFlex="33%">
-                        <input matInput [matDatepicker]="picker" placeholder="Date Of Birth" [(ngModel)]="patient.dob" name="dob">
+                        <input matInput [matDatepicker]="picker" placeholder="Date Of Birth" formControlName="dob" name="dob">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
+                    <div fxFlex="33%">
+                        <mat-form-field class="width-100">
+                            <mat-select placeholder="Gender" class="field-select" formControlName="gender" required>
+                                <mat-option *ngFor="let gender of genderList" [value]="gender.value">
+                                    {{ gender.viewValue }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="patientForm.controls['gender'].invalid && (patientForm.controls['gender'].dirty || patientForm.controls['gender'].touched || formSubmitAttempt)"
+                            class="alert-danger">
+                            <div *ngIf="patientForm.controls['gender'].errors.required">
+                                Gender is required
+                            </div>
+                        </div>
+                    </div>
                     <mat-form-field fxFlex="33%">
-                        <mat-select placeholder="Gender" class="field-select" [(ngModel)]="patient.gender" name="gender">
-                            <mat-option *ngFor="let gender of genderList" [value]="gender.value">
-                                {{ gender.viewValue }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field fxFlex="33%">
-                        <mat-select placeholder="Blood Group" class="field-select" [(ngModel)]="patient.bloodGroup" name="bloodGroup">
+                        <mat-select placeholder="Blood Group" class="field-select" formControlName="bloodGroup" name="bloodGroup">
                             <mat-option *ngFor="let blodGroup of bloodGroupsList" [value]="blodGroup.value">
                                 {{ blodGroup.viewValue }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" formGroupName="address">
                     <mat-input-container fxFlex="33%">
-                        <input matInput placeholder="Address Line 1" [(ngModel)]="patient.address.address1" name="address1">
+                        <input matInput placeholder="Address Line 1" formControlName="address1" name="address1">
                     </mat-input-container>
                     <mat-input-container fxFlex="33%">
-                        <input matInput placeholder="Address Line 2" [(ngModel)]="patient.address.address2" name="address2">
+                        <input matInput placeholder="Address Line 2" formControlName="address2" name="address2">
                     </mat-input-container>
                     <mat-input-container fxFlex="33%">
-                        <input matInput placeholder="City" [(ngModel)]="patient.address.city" name="city">
-                    </mat-input-container>
-                </div>
-                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-                    <mat-input-container fxFlex="33%">
-                        <input matInput placeholder="State" [(ngModel)]="patient.address.state" name="state">
-                    </mat-input-container>
-                    <mat-input-container fxFlex="33%">
-                        <input matInput placeholder="Zip Code" [(ngModel)]="patient.address.pincode" name="pincode">
-                    </mat-input-container>
-                    <mat-input-container fxFlex="33%">
-                        <span matPrefix>+91 &nbsp;</span>
-                        <input matInput placeholder="Mobile Number" [(ngModel)]="patient.mobileNumber" name="mobileNumber">
+                        <input matInput placeholder="City" formControlName="city" name="city">
                     </mat-input-container>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                    <mat-input-container fxFlex="33%" formGroupName="address">
+                        <input matInput placeholder="State" formControlName="state" name="state">
+                    </mat-input-container>
+                    <mat-input-container fxFlex="33%" formGroupName="address">
+                        <input matInput placeholder="Zip Code" formControlName="pincode" name="pincode">
+                    </mat-input-container>
+                    <div fxFlex="33%">
+                        <mat-input-container class="width-100">
+                            <span matPrefix>+91 &nbsp;</span>
+                            <input matInput placeholder="Mobile Number" formControlName="mobileNumber" name="mobileNumber">
+                        </mat-input-container>
+                        <div *ngIf="patientForm.controls['mobileNumber'].invalid && (patientForm.controls['mobileNumber'].dirty || patientForm.controls['mobileNumber'].touched || formSubmitAttempt)"
+                            class="alert-danger">
+                            <div *ngIf="patientForm.controls['mobileNumber'].errors.required">
+                                Mobile number is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <mat-input-container fxFlex="33%">
-                        <input matInput placeholder="Home Phone" [(ngModel)]="patient.phoneNumber" name="phoneNumber">
+                        <input matInput placeholder="Home Phone" formControlName="phoneNumber" name="phoneNumber">
                     </mat-input-container>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <div fxFlex="67%"></div>
                     <div fxFlex="33%" class="text-right">
-                        <a mat-raised-button routerLink="/app/patient/list">Cancel</a>
+                        <a mat-raised-button (click)="goToState('/app/patient/list')">Cancel</a>
                         <button mat-raised-button class="mat-primary" type="submit">Save</button>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 </div>

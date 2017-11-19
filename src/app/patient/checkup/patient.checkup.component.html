@@ -10,16 +10,17 @@
             <p>{{diagnosisName}}</p>
         </li>
     </ul>
-    <button mat-raised-button class="float-right mat-primary" routerLink="/app/patient/checkup/{{patientId}}/new">New Checkup</button>
     <p class="clearfix"></p>
     <form (ngSubmit)="onSubmit()">
         <h4>Checkup</h4>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-            <mat-select placeholder="Doctor" class="field-doctor-name" fxFlex="33%" [(ngModel)]="checkup.doctorName" name="doctorName">
-                <mat-option *ngFor="let doctor of doctorList" [value]="doctor.value">
-                    {{ doctor.viewValue }}
-                </mat-option>
-            </mat-select>
+            <mat-form-field fxFlex="33%">
+                <mat-select placeholder="Doctor" [(ngModel)]="checkup.doctorName" name="doctorName">
+                    <mat-option *ngFor="let doctor of doctorList" [value]="doctor.value">
+                        {{ doctor.viewValue }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
             <mat-form-field fxFlex="33%">
                 <input matInput [matDatepicker]="picker" placeholder="Checkup Date" [(ngModel)]="checkup.checkupDate" name="checkupDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -51,11 +52,13 @@
             <mat-input-container fxFlex="20%">
                 <input matInput [(ngModel)]="item.noOfDays" [ngModelOptions]="{standalone: true}">
             </mat-input-container>
-            <mat-select class="field-when-to-take" fxFlex="20%" [(ngModel)]="item.whenToTake" [ngModelOptions]="{standalone: true}">
-                <mat-option *ngFor="let take of whenToTakeList" [value]="take.value">
-                    {{ take.viewValue }}
-                </mat-option>
-            </mat-select>
+            <mat-form-field fxFlex="20%">
+                <mat-select class="field-when-to-take" [(ngModel)]="item.whenToTake" [ngModelOptions]="{standalone: true}">
+                    <mat-option *ngFor="let take of whenToTakeList" [value]="take.value">
+                        {{ take.viewValue }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
             <div fxFlex="150px" class="field-before-meal">
                 <mat-checkbox [(ngModel)]="item.beforeMeal" [ngModelOptions]="{standalone: true}"></mat-checkbox>
             </div>

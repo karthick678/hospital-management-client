@@ -4,11 +4,13 @@
             <div fxFlex="100%">
                 <sub-header [title]="'Checkup History'" class="float-left"></sub-header>
             </div>
-             <mat-select fxFlex="100px" class="field-search" [(ngModel)]="page.size" name="pageSize" (change)="getCheckupss({ offset: 0 })">
-                <mat-option *ngFor="let list of pageSizeList" [value]="list.value">
-                    {{ list.name }}
-                </mat-option>
-            </mat-select> 
+            <mat-form-field fxFlex="100px">
+                <mat-select [(ngModel)]="page.size" name="pageSize" (change)="getCheckupss({ offset: 0 })">
+                    <mat-option *ngFor="let list of pageSizeList" [value]="list.value">
+                        {{ list.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
             <div fxFlex="150px">
                 <button mat-raised-button class="float-right mat-info" routerLink="/app/patient/checkup/{{patientId}}/new">New Checkup</button>
             </div>

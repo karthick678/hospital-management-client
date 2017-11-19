@@ -30,6 +30,11 @@ export class DoctorDetailsService {
         return doctor;
     }
 
+    getAllDoctors(): Observable<Doctor> {
+        return this.http.get(AppSettings.API_ENDPOINT + '/getDoctors/')
+            .map((res) => res.json());
+    }
+
     getDoctorDetails(id: string): Observable<Doctor> {
         return this.http.get(AppSettings.API_ENDPOINT + '/getDoctorDetails/' + id)
             .map((res) => res.json());
