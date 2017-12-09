@@ -17,7 +17,7 @@
             <mat-form-field fxFlex="33%">
                 <mat-select placeholder="Doctor" [(ngModel)]="checkup.doctorName" name="doctorName">
                     <mat-option *ngFor="let doctor of doctorList" [value]="doctor.value">
-                        {{ doctor.viewValue }}
+                        {{ doctor.name }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -41,14 +41,25 @@
             <div fxFlex="20%">Medicine</div>
             <div fxFlex="20%">No.of Days</div>
             <div fxFlex="20%">When to take</div>
-            <div fxFlex="150px">Before Meal?</div>
-            <div fxFlex="150px">Delete</div>
+            <div fxFlex="100px" class="text-center">Before Meal?</div>
+            <div fxFlex="100px" class="text-center">Delete</div>
         </div>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" *ngFor="let item of checkup.prescription; let key = index">
             <div fxFlex="50px" class="no">{{key + 1}}</div>
-            <mat-input-container fxFlex="20%">
+            <!--<mat-input-container fxFlex="20%">
                 <input matInput [(ngModel)]="item.medicine" [ngModelOptions]="{standalone: true}">
-            </mat-input-container>
+            </mat-input-container> -->
+            <mat-form-field fxFlex="20%">
+                <input matInput  aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+                        <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
+                        <span>{{ state.name }}</span> |
+                        <small>Population: {{state.population}}</small>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
             <mat-input-container fxFlex="20%">
                 <input matInput [(ngModel)]="item.noOfDays" [ngModelOptions]="{standalone: true}">
             </mat-input-container>
@@ -59,10 +70,10 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <div fxFlex="150px" class="field-before-meal">
+            <div fxFlex="100px" class="field-before-meal text-center">
                 <mat-checkbox [(ngModel)]="item.beforeMeal" [ngModelOptions]="{standalone: true}"></mat-checkbox>
             </div>
-            <div fxFlex="150px" class="field-delete">
+            <div fxFlex="100px" class="field-delete text-center">
                 <a class="atag" title="Delete Medicine" (click)="deleteMedicine(key)">
                     <mat-icon>delete_forever</mat-icon>
                 </a>
@@ -72,7 +83,7 @@
             <div fxFlex="60%">
             </div>
             <div fxFlex="230px">
-                <a mat-raised-button class="float-right mat-info" (click)="addMedicine()">New Medicine</a>
+                <a  class="float-right mat-info atag new-medicine" (click)="addMedicine()"><i class="material-icons">add_box</i><span>New Medicine</span></a>
             </div>
         </div>
         <h4>ExtraNotes</h4>
