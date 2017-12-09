@@ -1,38 +1,39 @@
 <div class="patient-checkup-component">
     <ul class="breadcrumb">
-        <li><a class="atag" routerLink="/patient/list">Patients</a>
-            <md-icon>chevron_right</md-icon>
+        <li><a class="atag" routerLink="/app/patient/list">Patients</a>
+            <mat-icon>chevron_right</mat-icon>
         </li>
-        <li><a class="atag" routerLink="/patient/report/{{patientId}}">Report</a>
-            <md-icon>chevron_right</md-icon>
+        <li><a class="atag" routerLink="/app/patient/report/{{patientId}}">Report</a>
+            <mat-icon>chevron_right</mat-icon>
         </li>
         <li>
             <p>{{diagnosisName}}</p>
         </li>
     </ul>
-    <button md-raised-button class="float-right mat-primary" routerLink="/patient/checkup/{{patientId}}/new">New Checkup</button>
     <p class="clearfix"></p>
     <form (ngSubmit)="onSubmit()">
         <h4>Checkup</h4>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-            <md-select placeholder="Doctor" class="field-doctor-name" fxFlex="33%" [(ngModel)]="checkup.doctorName" name="doctorName">
-                <md-option *ngFor="let doctor of doctorList" [value]="doctor.value">
-                    {{ doctor.viewValue }}
-                </md-option>
-            </md-select>
-            <md-input-container fxFlex="33%">
-                <input mdInput [mdDatepicker]="picker" placeholder="Checkup Date" [(ngModel)]="checkup.checkupDate" name="checkupDate">
-                <button mdSuffix [mdDatepickerToggle]="picker"></button>
-            </md-input-container>
-            <md-datepicker #picker></md-datepicker>
+            <mat-form-field fxFlex="33%">
+                <mat-select placeholder="Doctor" [(ngModel)]="checkup.doctorName" name="doctorName">
+                    <mat-option *ngFor="let doctor of doctorList" [value]="doctor.value">
+                        {{ doctor.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex="33%">
+                <input matInput [matDatepicker]="picker" placeholder="Checkup Date" [(ngModel)]="checkup.checkupDate" name="checkupDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
         </div>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-            <md-input-container fxFlex="33%">
-                <textarea mdInput placeholder="Symptoms" [(ngModel)]="checkup.symptoms" name="symptoms"></textarea>
-            </md-input-container>
-            <md-input-container fxFlex="33%">
-                <textarea mdInput placeholder="Diagnosis" [(ngModel)]="checkup.diagnosis" name="diagnosis"></textarea>
-            </md-input-container>
+            <mat-input-container fxFlex="33%">
+                <textarea matInput placeholder="Symptoms" [(ngModel)]="checkup.symptoms" name="symptoms"></textarea>
+            </mat-input-container>
+            <mat-input-container fxFlex="33%">
+                <textarea matInput placeholder="Diagnosis" [(ngModel)]="checkup.diagnosis" name="diagnosis"></textarea>
+            </mat-input-container>
         </div>
         <h4>Prescription</h4>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
@@ -40,28 +41,41 @@
             <div fxFlex="20%">Medicine</div>
             <div fxFlex="20%">No.of Days</div>
             <div fxFlex="20%">When to take</div>
-            <div fxFlex="150px">Before Meal?</div>
-            <div fxFlex="150px">Delete</div>
+            <div fxFlex="100px" class="text-center">Before Meal?</div>
+            <div fxFlex="100px" class="text-center">Delete</div>
         </div>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" *ngFor="let item of checkup.prescription; let key = index">
             <div fxFlex="50px" class="no">{{key + 1}}</div>
-            <md-input-container fxFlex="20%">
-                <input mdInput [(ngModel)]="item.medicine" [ngModelOptions]="{standalone: true}">
-            </md-input-container>
-            <md-input-container fxFlex="20%">
-                <input mdInput [(ngModel)]="item.noOfDays" [ngModelOptions]="{standalone: true}">
-            </md-input-container>
-            <md-select class="field-when-to-take" fxFlex="20%" [(ngModel)]="item.whenToTake" [ngModelOptions]="{standalone: true}">
-                <md-option *ngFor="let take of whenToTakeList" [value]="take.value">
-                    {{ take.viewValue }}
-                </md-option>
-            </md-select>
-            <div fxFlex="150px" class="field-before-meal">
-                <md-checkbox [(ngModel)]="item.beforeMeal" [ngModelOptions]="{standalone: true}"></md-checkbox>
+            <!--<mat-input-container fxFlex="20%">
+                <input matInput [(ngModel)]="item.medicine" [ngModelOptions]="{standalone: true}">
+            </mat-input-container> -->
+            <mat-form-field fxFlex="20%">
+                <input matInput  aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+                        <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
+                        <span>{{ state.name }}</span> |
+                        <small>Population: {{state.population}}</small>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-input-container fxFlex="20%">
+                <input matInput [(ngModel)]="item.noOfDays" [ngModelOptions]="{standalone: true}">
+            </mat-input-container>
+            <mat-form-field fxFlex="20%">
+                <mat-select class="field-when-to-take" [(ngModel)]="item.whenToTake" [ngModelOptions]="{standalone: true}">
+                    <mat-option *ngFor="let take of whenToTakeList" [value]="take.value">
+                        {{ take.viewValue }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div fxFlex="100px" class="field-before-meal text-center">
+                <mat-checkbox [(ngModel)]="item.beforeMeal" [ngModelOptions]="{standalone: true}"></mat-checkbox>
             </div>
-            <div fxFlex="150px" class="field-delete">
+            <div fxFlex="100px" class="field-delete text-center">
                 <a class="atag" title="Delete Medicine" (click)="deleteMedicine(key)">
-                    <md-icon>delete_forever</md-icon>
+                    <mat-icon>delete_forever</mat-icon>
                 </a>
             </div>
         </div>
@@ -69,20 +83,20 @@
             <div fxFlex="60%">
             </div>
             <div fxFlex="230px">
-                <a md-raised-button class="float-right mat-info" (click)="addMedicine()">New Medicine</a>
+                <a  class="float-right mat-info atag new-medicine" (click)="addMedicine()"><i class="material-icons">add_box</i><span>New Medicine</span></a>
             </div>
         </div>
         <h4>ExtraNotes</h4>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
-            <md-input-container fxFlex="100%">
-                <textarea mdInput placeholder="Extra Notes" [(ngModel)]="checkup.extraNotes" name="extraNotes"></textarea>
-            </md-input-container>
+            <mat-input-container fxFlex="100%">
+                <textarea matInput placeholder="Extra Notes" [(ngModel)]="checkup.extraNotes" name="extraNotes"></textarea>
+            </mat-input-container>
         </div>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <div fxFlex="67%"></div>
             <div fxFlex="33%" class="text-right">
-                <a md-raised-button routerLink="/patient/report/{{patientId}}">Cancel</a>
-                <button md-raised-button class="mat-primary" type="submit">Save</button>
+                <a mat-raised-button routerLink="/app/patient/report/{{patientId}}">Cancel</a>
+                <button mat-raised-button class="mat-primary" type="submit">Save</button>
             </div>
         </div>
     </form>

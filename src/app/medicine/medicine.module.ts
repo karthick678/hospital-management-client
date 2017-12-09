@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 
 import { RouterModule } from '@angular/router';
-import { MedicineRoutingModule } from './medicine.routing.module';
 
 import { MedicineSubmenuComponent } from './shared/medicine-submenu/medicine-submenu.component';
 import { MedicineComponent } from './medicine.component';
@@ -17,7 +16,7 @@ import { CategoryDetailsComponent } from './category/details/category.details.co
 @NgModule({
     imports: [
         SharedModule,
-        MedicineRoutingModule
+        RouterModule
     ],
     declarations: [
         MedicineSubmenuComponent,

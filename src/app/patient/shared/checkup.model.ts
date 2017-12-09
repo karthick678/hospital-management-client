@@ -4,7 +4,7 @@ export class Checkup {
     doctorName: string = '';
     symptoms: string = '';
     diagnosis: string = '';
-    checkupDate: string = '';
+    checkupDate:  Date;
     prescription: Prescription[];
     extraNotes: string = '';
 }

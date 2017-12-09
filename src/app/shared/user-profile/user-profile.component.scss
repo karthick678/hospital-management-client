@@ -1,0 +1,48 @@
+.user-profile {
+    padding: 10px;
+    h4 {
+        text-align: center;
+    }
+    .profile-user-img {
+        margin: 0 auto;
+        width: 105px;
+        .mat-icon {
+            color: #3f51b5;
+            font-size: 100px;
+        }
+    }
+    .profile-user-name {
+        color:#5E6C84;
+        font-size: 13px;
+        text-align: center;
+        margin: 0px;
+        font-weight: 500;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eaecf0;
+    }
+    .list-group {
+        padding-left: 0;
+        margin-bottom: 20px;
+        .list-group-item {
+            border-bottom: 1px solid #eaecf0;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            font-size: 13px;
+            b {
+                color: #5E6C84;
+                position: relative;
+                padding-left: 25px;
+                .mat-icon {
+                    position: absolute;
+                    left: 0px;
+                    font-size: 18px;
+                    color: #3f51b5;
+                }
+            }
+            span {
+                color: #5E6C84;
+                font-weight: 500;
+            }
+        }
+    }
+}

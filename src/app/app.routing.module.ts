@@ -1,27 +1,14 @@
 import { ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule, LoadChildren } from '@angular/router';
-
-import { DoctorComponent } from './doctor/doctor.component';
-import { PatientComponent } from './patient/patient.component';
-import { MedicineComponent } from './medicine/medicine.component';
+import { Routes, RouterModule, LoadChildren, CanLoad } from '@angular/router';
 
 const appRoutes: Routes = [
     {
         path: '',
-        redirectTo: '/patient/list',
+        redirectTo: 'app',
         pathMatch: 'full'
-    },
-    {
-        path: 'patient',
-        loadChildren: './patient/patient.module#PatientModule',
-    },
-    {
-        path: 'doctor',
-        loadChildren: './doctor/doctor.module#DoctorModule',
-    },
-    {
-        path: 'medicine',
-        loadChildren: './medicine/medicine.module#MedicineModule',
+    }, {
+        path: 'login',
+        loadChildren: './login/login.module#LoginModule',
     }
 ];
 

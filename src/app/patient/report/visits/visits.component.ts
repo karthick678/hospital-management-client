@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Checkup } from './../../shared/checkup.model';
 import { Page } from './../../shared/page.model';
 import { SharedService } from './../../../shared/shared.service';
@@ -22,7 +22,7 @@ export class PatientReportVisitComponent {
     columns: any = [];
     pageSizeList: any = [];
 
-    constructor(private sharedService: SharedService, public mdDialog: MdDialog) {
+    constructor(private sharedService: SharedService, public matDialog: MatDialog) {
         this.pageSizeList = sharedService.getPageSizeList();
     }
 
@@ -36,9 +36,9 @@ export class PatientReportVisitComponent {
         this.getCheckups.emit(pageInfo);
     }
 
-    openmdDialog(row: Checkup) {
-        let mdDialog = this.mdDialog.open(ModelDialogComponent);
-        mdDialog.afterClosed().subscribe(isDelete => {
+    openmatDialog(row: Checkup) {
+        let matDialog = this.matDialog.open(ModelDialogComponent);
+        matDialog.afterClosed().subscribe(isDelete => {
             if (isDelete) {
                 this.deleteCheckup.emit(row);
             }

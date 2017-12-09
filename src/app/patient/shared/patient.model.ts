@@ -7,7 +7,8 @@ export class Patient {
     mobileNumber: string;
     phoneNumber: string;
     bloodGroup: string;
-    constructor(_id: string, first: string, middle: string, last: string, dob: string, gender: string, address1: string, address2: string, city: string, pincode: string, state: string, mobileNumber: string, phoneNumber: string, bloodGroup: string) {
+    status: boolean;
+    constructor(_id: string, first: string, middle: string, last: string, dob: string, gender: string, address1: string, address2: string, city: string, pincode: string, state: string, mobileNumber: string, phoneNumber: string, bloodGroup: string, status: boolean) {
         this._id = _id;
         this.name.first = first;
         this.name.middle = middle;
@@ -21,7 +22,8 @@ export class Patient {
         this.address.state = state;
         this.mobileNumber = mobileNumber;
         this.phoneNumber = phoneNumber;
-        this.bloodGroup = bloodGroup
+        this.bloodGroup = bloodGroup;
+        this.status = status;
     }
 }
 

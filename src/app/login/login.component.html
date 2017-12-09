@@ -1,0 +1,56 @@
+<div class="login-component">
+    <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+        <div fxFlex="50%">
+        </div>
+        <div fxFlex="400px">
+            <div class="login-panel">
+                <mat-card>
+                    <img src="./../../assets/images/hm-logo.svg" class="branding" title="Hospial Management" />
+
+                    <div *ngIf="isLoginError">
+                        <h2>No account found</h2>
+                        <p>There's no account with the info you provided</p>
+                        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                            <div fxFlex="33%"></div>
+                            <div fxFlex="67%" class="text-right">
+                                <button mat-raised-button class="mat-primary" (click)="showLoginForm();">Try again</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!isLoginError">
+                        <h2>Login</h2>
+                        <p>to use your hospital Management account</p>
+                        <form (ngSubmit)="onSubmit()" [formGroup]="authForm">
+                            <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                                <mat-input-container fxFlex="100%">
+                                    <input type="text" matInput placeholder="Email" formControlName="email" required>
+                                </mat-input-container>
+                            </div>
+                            <div *ngIf="isFieldValid('email')" class="alert-danger">
+                                Email is required
+                            </div>
+                            <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                                <mat-input-container fxFlex="100%">
+                                    <input type="password" matInput placeholder="Password" formControlName="password" required>
+                                </mat-input-container>
+                            </div>
+                            <div *ngIf="isFieldValid('password')" class="alert-danger">
+                                Password is required
+                            </div>
+                            <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+                                <div fxFlex="33%"></div>
+                                <div fxFlex="67%" class="text-right">
+                                    <button mat-raised-button class="mat-primary" type="submit" routerLink="/app/dashboard">Login</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </mat-card>
+            </div>
+        </div>
+        <div fxFlex="50%">
+        </div>
+    </div>
+
+</div>

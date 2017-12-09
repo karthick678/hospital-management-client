@@ -1,33 +1,37 @@
 <div class="doctor-list-component">
     <div>
         <sub-header [title]="'Doctors'" class="float-left"></sub-header>
-        <button md-raised-button class="float-right mat-primary" routerLink="/doctor/details/new">New Doctor</button>
+        <button mat-raised-button class="float-right mat-primary" routerLink="/app/doctor/details/new">New Doctor</button>
         <p class="clearfix"></p>
     </div>
     <form (ngSubmit)="onSubmit()">
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <div fxFlex="100%"></div>
-            <md-select fxFlex="120px" class="field-search" [(ngModel)]="page.size" name="pageSize" (change)="setPage({ offset: 0 })">
-                <md-option *ngFor="let list of pageSizeList" [value]="list.value">
-                    {{ list.name }}
-                </md-option>
-            </md-select>
-            <md-select fxFlex="20%" class="field-search" [(ngModel)]="searchAttribute" name="gender">
-                <md-option *ngFor="let list of searchList" [value]="list.value">
-                    {{ list.viewValue }}
-                </md-option>
-            </md-select>
-            <md-input-container fxFlex="20%">
-                <input type="text" mdInput [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}">
-                <md-icon mdSuffix>search</md-icon>
-            </md-input-container>
+            <mat-form-field fxFlex="120px">
+                <mat-select class="field-search" [(ngModel)]="page.size" name="pageSize" (change)="setPage({ offset: 0 })">
+                    <mat-option *ngFor="let list of pageSizeList" [value]="list.value">
+                        {{ list.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex="20%">
+                <mat-select class="field-search" [(ngModel)]="searchAttribute" name="gender">
+                    <mat-option *ngFor="let list of searchList" [value]="list.value">
+                        {{ list.viewValue }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-input-container fxFlex="20%">
+                <input type="text" matInput [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-input-container>
         </div>
     </form>
     <ngx-datatable class="material striped" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'"
         [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)='setPage($event)'>
         <ngx-datatable-column name="Name">
             <ng-template let-row="row" ngx-datatable-cell-template>
-                <a class="atag" routerLink="/doctor/details/{{row._id}}" title="{{row.name}}">
+                <a class="atag" routerLink="/app/doctor/details/{{row._id}}" title="{{row.name.first}}">
                     {{row.name.first}} {{row.name.middle}} {{row.name.last}}
                 </a>
             </ng-template>
@@ -49,8 +53,8 @@
         </ngx-datatable-column>
         <ngx-datatable-column name="Edit">
             <ng-template let-row="row" ngx-datatable-cell-template>
-                <a class="atag" routerLink="/doctor/details/{{row._id}}" title="Edit">
-                    <md-icon>mode_edit</md-icon>
+                <a class="atag" routerLink="/app/doctor/details/{{row._id}}" title="Edit">
+                    <mat-icon>mode_edit</mat-icon>
                 </a>
             </ng-template>
         </ngx-datatable-column>

@@ -1,24 +1,51 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from "rxjs";
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Checkup } from '../shared/checkup.model';
 import { PatientCheckupComponentService } from './patient.checkup.service';
+import { Doctor } from './../../doctor/shared/doctor.model';
+import { DoctorDetailsService } from './../../doctor/details/doctor.details.service';
+import { FormControl } from "@angular/forms";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/startWith';
 
 @Component({
     selector: 'patient-checkup',
     templateUrl: './patient.checkup.component.html',
     styleUrls: ['./patient.checkup.component.scss'],
-    providers: [PatientCheckupComponentService]
+    providers: [PatientCheckupComponentService, DoctorDetailsService]
 })
 
 export class PatientCheckupComponent {
     id: string;
     patientId: string;
     checkup: Checkup;
-    doctorList = [{ viewValue: '-- select --', value: '' }, { viewValue: 'karthick', value: 'karthick' }]
+    doctorList: any;
     whenToTakeList = [{ viewValue: '-- select --', value: '' }, { viewValue: '1-1-1', value: '1-1-1' }, { viewValue: '1-0-1', value: '1-0-1' }, { viewValue: '0-0-1', value: '0-0-1' }, { viewValue: '0-1-0', value: '0-1-0' }, { viewValue: '1-0-0', value: '1-0-0' }];
     diagnosisName: string;
+    filteredStates: Observable<any[]>;
+    stateCtrl: FormControl;
+    states: any[] = [
+        {
+            name: 'Arkansas',
+            population: '2.978M',
+        },
+        {
+            name: 'California',
+            population: '39.14M',
+        }
+    ];
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private patientCheckupComponentService: PatientCheckupComponentService) {
+    constructor(private router: Router, private activatedRoute: ActivatedRoute, private patientCheckupComponentService: PatientCheckupComponentService, private doctorDetailsService: DoctorDetailsService) {
+        this.stateCtrl = new FormControl();
+        this.filteredStates = this.stateCtrl.valueChanges
+            .startWith(null)
+            .map(state => state ? this.filterStates(state) : this.states.slice());
+    }
+
+    filterStates(name: string) {
+        return this.states.filter(state =>
+            state.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
     }
 
     ngOnInit() {
@@ -32,6 +59,25 @@ export class PatientCheckupComponent {
             else
                 this.diagnosisName = "New Checkup";
         });
+        this.doctorDetailsService.getAllDoctors().subscribe(doctors => {
+            this.doctorList = this.doctorsPicklist(doctors);
+        });
+    }
+
+    doctorsPicklist(doctors: any) {
+        let picklist = [{ name: '-- select --', value: '' }], doctorsLength = doctors.length;
+        for (let index = 0; index < doctorsLength; index++) {
+            let doctor = {
+                name: doctors[index].name.first + ' ' + doctors[index].name.middle + ' ' + doctors[index].name.last + ' <' + doctors[index].email + '>',
+                value: doctors[index]._id
+            }
+            if (this.id !== 'new') {
+                picklist.push(doctor);
+            } else if (doctors[index].status) {
+                picklist.push(doctor);
+            }
+        }
+        return picklist;
     }
 
     onSubmit() {
@@ -51,7 +97,7 @@ export class PatientCheckupComponent {
     createCheckupDetails() {
         this.patientCheckupComponentService.createCheckupDetails(this.checkup).subscribe(checkup => {
             this.checkup = checkup;
-            this.router.navigate(['/patient/checkup/' + this.patientId + '/' + this.checkup._id]);
+            this.router.navigate(['/app/patient/checkup/' + this.patientId + '/' + this.checkup._id]);
         });
     }
 

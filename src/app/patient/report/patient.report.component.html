@@ -1,19 +1,17 @@
-<div class="patient-report-component">
+<div class="patient-report-component height-100">
     <div>
         <ul class="breadcrumb">
-            <li><a class="atag" routerLink="/patient/list">Patients</a><md-icon>chevron_right</md-icon></li>
+            <li><a class="atag" routerLink="/app/patient/list">Patients</a><mat-icon>chevron_right</mat-icon></li>
             <li class="active">
                 <p>{{patientName}}</p>
             </li>
         </ul>
         <div class="float-right">
-            <button md-button routerLink="/patient/details/{{id}}">Edit</button>
-            <button md-button>Delete</button>
-            <button md-raised-button class="mat-primary" routerLink="/patient/details/new">New Patient</button>
+            <button mat-raised-button class="mat-primary" routerLink="/app/patient/checkup/{{id}}/new">New Checkup</button>
         </div>
         <p class="clearfix"></p>
     </div>
-    <div fxLayout fxLayout.xs="column" fxLayoutGap="20px">
+    <div fxLayout fxLayout.xs="column" fxLayoutGap="20px" class="height-100">
         <div fxFlex="260px">
             <basic-info [patient]="patient"></basic-info>
         </div>

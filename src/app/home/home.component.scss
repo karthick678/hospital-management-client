@@ -1,0 +1,89 @@
+main {
+    width: 100%;
+    height: 100%;
+    .main-overlay {
+        position: fixed;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        background: #333;
+        opacity: 0.5;
+        z-index: 1;
+    }
+    .user-profile-panel {
+        width: 260px;
+    }
+    .page-sidenav-fab-container {
+        width: 100%;
+        height: 100%;
+        background: #FFFFFF;
+        .page-main-menu {
+            width: 84px;
+            background: #3f51b5;
+            overflow-x: hidden;
+            .branding {
+                max-width: 84px;
+                max-height: 84px;
+            }
+            .list-item {
+                list-style-type: none;
+                padding: 0px;
+                margin: 0px;
+                li {
+                    a {
+                        width: 100%;
+                        color: #FFFFFF;
+                        text-decoration: none;
+                        text-align: center;
+                        display: inline-block;
+                        border-bottom: 1px solid #267ED5;
+                        &.active,
+                        &:hover {
+                            background: #37479F;
+                        }
+                        p {
+                            margin-top: 0px;
+                            margin-bottom: 10px;
+                        }
+                        mat-icon {
+                            margin-top: 10px;
+                            font-size: 32px;
+                            display: inline-block;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+            .user-info {
+                button {
+                    width: 100%;
+                    height: 60px;
+                    border: 0px;
+                    background: transparent;
+                    position: absolute;
+                    bottom: 0px;
+                    &:hover,
+                    &:focus {
+                        border: 0px;
+                        outline: none;
+                    }
+                    .mat-icon {
+                        color: #FFFFFF;
+                        border: 2px solid #267ED5;
+                        border-radius: 50px;
+                        padding: 5px;
+                        background: #3d46a6;
+                    }
+                }
+                .user-profile {
+                    width: 200px;
+                }
+            }
+        }
+        .page-content {
+            padding: 10px;
+            height: calc(100% - 100px);
+        }
+    }
+}
