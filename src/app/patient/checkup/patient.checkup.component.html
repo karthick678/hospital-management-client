@@ -11,28 +11,28 @@
         </li>
     </ul>
     <p class="clearfix"></p>
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" [formGroup]="checkupForm">
         <h4>Checkup</h4>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <mat-form-field fxFlex="33%">
-                <mat-select placeholder="Doctor" [(ngModel)]="checkup.doctorName" name="doctorName">
+                <mat-select placeholder="Doctor" formControlName="doctorName" required>
                     <mat-option *ngFor="let doctor of doctorList" [value]="doctor.value">
                         {{ doctor.name }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field fxFlex="33%">
-                <input matInput [matDatepicker]="picker" placeholder="Checkup Date" [(ngModel)]="checkup.checkupDate" name="checkupDate">
+                <input matInput [matDatepicker]="picker" placeholder="Checkup Date" formControlName="checkupDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
         </div>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <mat-input-container fxFlex="33%">
-                <textarea matInput placeholder="Symptoms" [(ngModel)]="checkup.symptoms" name="symptoms"></textarea>
+                <textarea matInput placeholder="Symptoms" formControlName="symptoms"></textarea>
             </mat-input-container>
             <mat-input-container fxFlex="33%">
-                <textarea matInput placeholder="Diagnosis" [(ngModel)]="checkup.diagnosis" name="diagnosis"></textarea>
+                <textarea matInput placeholder="Diagnosis" formControlName="diagnosis"></textarea>
             </mat-input-container>
         </div>
         <h4>Prescription</h4>
@@ -44,52 +44,43 @@
             <div fxFlex="100px" class="text-center">Before Meal?</div>
             <div fxFlex="100px" class="text-center">Delete</div>
         </div>
-        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" *ngFor="let item of checkup.prescription; let key = index">
-            <div fxFlex="50px" class="no">{{key + 1}}</div>
-            <!--<mat-input-container fxFlex="20%">
-                <input matInput [(ngModel)]="item.medicine" [ngModelOptions]="{standalone: true}">
-            </mat-input-container> -->
-            <mat-form-field fxFlex="20%">
-                <input matInput  aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
-                        <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
-                        <span>{{ state.name }}</span> |
-                        <small>Population: {{state.population}}</small>
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-
-            <mat-input-container fxFlex="20%">
-                <input matInput [(ngModel)]="item.noOfDays" [ngModelOptions]="{standalone: true}">
-            </mat-input-container>
-            <mat-form-field fxFlex="20%">
-                <mat-select class="field-when-to-take" [(ngModel)]="item.whenToTake" [ngModelOptions]="{standalone: true}">
-                    <mat-option *ngFor="let take of whenToTakeList" [value]="take.value">
-                        {{ take.viewValue }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <div fxFlex="100px" class="field-before-meal text-center">
-                <mat-checkbox [(ngModel)]="item.beforeMeal" [ngModelOptions]="{standalone: true}"></mat-checkbox>
-            </div>
-            <div fxFlex="100px" class="field-delete text-center">
-                <a class="atag" title="Delete Medicine" (click)="deleteMedicine(key)">
-                    <mat-icon>delete_forever</mat-icon>
-                </a>
+        <div formArrayName="prescription">
+            <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" *ngFor="let item of checkupForm.get('prescription').controls; let key = index;" [formGroupName]="key">
+                <div fxFlex="50px" class="no">{{key + 1}}</div>
+                <mat-input-container fxFlex="20%">
+                    <input matInput formControlName="medicine">
+                </mat-input-container>
+                <mat-input-container fxFlex="20%">
+                    <input matInput formControlName="noOfDays">
+                </mat-input-container>
+                <mat-form-field fxFlex="20%">
+                    <mat-select class="field-when-to-take" formControlName="whenToTake" name="whenToTake">
+                        <mat-option *ngFor="let take of whenToTakeList" [value]="take.value">
+                            {{ take.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div fxFlex="100px" class="field-before-meal text-center">
+                    <mat-checkbox formControlName="beforeMeal"></mat-checkbox>
+                </div>
+                <div fxFlex="100px" class="field-delete text-center">
+                    <a class="atag" title="Delete Medicine" (click)="deletePrescriptions(key)">
+                        <mat-icon>delete_forever</mat-icon>
+                    </a>
+                </div>
             </div>
         </div>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <div fxFlex="60%">
             </div>
             <div fxFlex="230px">
-                <a  class="float-right mat-info atag new-medicine" (click)="addMedicine()"><i class="material-icons">add_box</i><span>New Medicine</span></a>
+                <a class="float-right mat-info atag new-medicine" (click)="addPrescriptions(defaultPrescription)"><i class="material-icons">add_box</i><span>New Medicine</span></a>
             </div>
         </div>
         <h4>ExtraNotes</h4>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <mat-input-container fxFlex="100%">
-                <textarea matInput placeholder="Extra Notes" [(ngModel)]="checkup.extraNotes" name="extraNotes"></textarea>
+                <textarea matInput placeholder="Extra Notes" formControlName="extraNotes"></textarea>
             </mat-input-container>
         </div>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
