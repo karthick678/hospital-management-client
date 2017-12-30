@@ -21,12 +21,7 @@ export class PatientCheckupComponentService {
             checkupDate: new Date(),
             diagnosis: '',
             symptoms: '',
-            prescription: [{
-                medicine: '',
-                noOfDays: 0,
-                whenToTake: '',
-                beforeMeal: false,
-            }],
+            prescription : <any>[],
             extraNotes: ''
         };
         return checkup;

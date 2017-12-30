@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from "rxjs";
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ModelDialogComponent } from './../../shared/model-dialog/model-dialog.component';
 import { Checkup } from '../shared/checkup.model';
 import { PatientCheckupComponentService } from './patient.checkup.service';
+import { FlashMessageService } from './../../shared/flash-message/flash-message.service';
 import { Doctor } from './../../doctor/shared/doctor.model';
 import { DoctorDetailsService } from './../../doctor/details/doctor.details.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
+import { AppSettings } from './../../app.settings';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
 
@@ -17,7 +21,10 @@ import 'rxjs/add/operator/startWith';
 })
 
 export class PatientCheckupComponent {
+    dismiss: number = AppSettings.alert_dismiss;
     id: string;
+    isCancel: boolean = false;
+    toState: string;
     patientId: string;
     doctorList: any;
     whenToTakeList = [{ viewValue: '-- select --', value: '' }, { viewValue: '1-1-1', value: '1-1-1' }, { viewValue: '1-0-1', value: '1-0-1' }, { viewValue: '0-0-1', value: '0-0-1' }, { viewValue: '0-1-0', value: '0-1-0' }, { viewValue: '1-0-0', value: '1-0-0' }];
@@ -29,8 +36,9 @@ export class PatientCheckupComponent {
         whenToTake: '',
         beforeMeal: false,
     };
+    formSubmitAttempt: boolean = false;
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private patientCheckupComponentService: PatientCheckupComponentService, private formBuilder: FormBuilder, private doctorDetailsService: DoctorDetailsService) {
+    constructor(private flashMessageService: FlashMessageService, private router: Router, private activatedRoute: ActivatedRoute, private patientCheckupComponentService: PatientCheckupComponentService, private formBuilder: FormBuilder, private doctorDetailsService: DoctorDetailsService, public matDialog: MatDialog) {
 
     }
 
@@ -68,10 +76,13 @@ export class PatientCheckupComponent {
     }
 
     onSubmit() {
-        if (this.checkupForm.value._id)
-            this.updateCheckupDetails();
-        else
-            this.createCheckupDetails();
+        this.formSubmitAttempt = true;
+        if (this.checkupForm.status === "VALID") {
+            if (this.checkupForm.value._id)
+                this.updateCheckupDetails();
+            else
+                this.createCheckupDetails();
+        }
     }
 
     getCheckupDetails() {
@@ -97,13 +108,19 @@ export class PatientCheckupComponent {
     createCheckupDetails() {
         this.patientCheckupComponentService.createCheckupDetails(this.checkupForm.value).subscribe(checkup => {
             this.checkupForm.patchValue(checkup);
-            this.router.navigate(['/app/patient/checkup/' + this.patientId + '/' + this.checkupForm.value._id]);
+            if (!this.toState)
+                this.toState = '/app/patient/checkup/' + this.patientId + '/' + this.checkupForm.value._id;
+            this.isCancel = true;
+            this.alertSuccess('Created successfully');
+            //this.router.navigate(['/app/patient/checkup/' + this.patientId + '/' + this.checkupForm.value._id]);
         });
     }
 
     updateCheckupDetails() {
         this.patientCheckupComponentService.updatePatientDetails(this.checkupForm.value).subscribe(checkup => {
             this.checkupForm.patchValue(checkup);
+            this.alertSuccess('Updated successfully');
+            this.checkupForm.markAsPristine();
         });
     }
 
@@ -123,26 +140,58 @@ export class PatientCheckupComponent {
             patientId: '',
             doctorName: '',
             checkupDate: new Date(),
-            symptoms: '',
-            diagnosis: '',
-            prescription: this.formBuilder.array([this.createPrescription(this.defaultPrescription)]),
+            symptoms: ['', Validators.compose([Validators.required])],
+            diagnosis: ['', Validators.compose([Validators.required])],
+            prescription: this.formBuilder.array([]),
             extraNotes: ''
         });
     }
 
     createPrescription(prescription: any): FormGroup {
         return this.formBuilder.group({
-            medicine: prescription.medicine,
+            medicine: [prescription.medicine, Validators.compose([Validators.required])],
             noOfDays: prescription.noOfDays,
-            whenToTake: prescription.whenToTake,
+            whenToTake: [prescription.whenToTake, Validators.compose([Validators.required])],
             beforeMeal: prescription.beforeMeal
         });
     }
-}
 
-class Prescription {
-    medicine: string;
-    noOfDays: number;
-    whenToTake: string;
-    beforeMeal: boolean;
+    canDeactivate(next: any) {
+        if (this.checkupForm.dirty && this.checkupForm.status === "VALID" && !this.isCancel) {
+            let matDialog = this.matDialog.open(ModelDialogComponent, {
+                disableClose: true,
+                data: { type: 'save' }
+            });
+            matDialog.afterClosed().subscribe(isSave => {
+                if (isSave) {
+                    this.toState = next.url;
+                    this.onSubmit();
+                } else {
+                    this.checkupForm.markAsPristine();
+                    this.goToState(next.url);
+                }
+            });
+        } else if (this.checkupForm.status !== "VALID" && !this.isCancel) {
+            this.onSubmit();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    alertSuccess(message: string) {
+        this.flashMessageService.show(message, {
+            classes: ['success'],
+            timeout: this.dismiss
+        });
+        if (this.toState)
+            this.router.navigate([this.toState]);
+        else
+            this.toState = '';
+    }
+
+    goToState(state: string) {
+        this.isCancel = true;
+        this.router.navigate([state]);
+    }
 }

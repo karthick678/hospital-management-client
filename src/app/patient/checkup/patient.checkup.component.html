@@ -27,6 +27,12 @@
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
         </div>
+        <div *ngIf="checkupForm.controls['doctorName'].invalid && (checkupForm.controls['doctorName'].dirty || checkupForm.controls['doctorName'].touched || formSubmitAttempt)"
+            class="alert-danger">
+            <div *ngIf="checkupForm.controls['doctorName'].errors.required">
+                Doctor is required
+            </div>
+        </div>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <mat-input-container fxFlex="33%">
                 <textarea matInput placeholder="Symptoms" formControlName="symptoms"></textarea>
@@ -35,8 +41,22 @@
                 <textarea matInput placeholder="Diagnosis" formControlName="diagnosis"></textarea>
             </mat-input-container>
         </div>
-        <h4>Prescription</h4>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
+            <div fxFlex="33%" *ngIf="checkupForm.controls['symptoms'].invalid && (checkupForm.controls['symptoms'].dirty || checkupForm.controls['symptoms'].touched || formSubmitAttempt)"
+                class="alert-danger">
+                <div *ngIf="checkupForm.controls['symptoms'].errors.required">
+                    Symptoms is required
+                </div>
+            </div>
+            <div fxFlex="33%" *ngIf="checkupForm.controls['diagnosis'].invalid && (checkupForm.controls['diagnosis'].dirty || checkupForm.controls['diagnosis'].touched || formSubmitAttempt)"
+                class="alert-danger">
+                <div *ngIf="checkupForm.controls['diagnosis'].errors.required">
+                    Diagnosis is required
+                </div>
+            </div>
+        </div>
+        <h4>Prescription</h4>
+        <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" class="prescription-header">
             <div fxFlex="50px">#</div>
             <div fxFlex="20%">Medicine</div>
             <div fxFlex="20%">No.of Days</div>
@@ -45,7 +65,8 @@
             <div fxFlex="100px" class="text-center">Delete</div>
         </div>
         <div formArrayName="prescription">
-            <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" *ngFor="let item of checkupForm.get('prescription').controls; let key = index;" [formGroupName]="key">
+            <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" *ngFor="let item of checkupForm.get('prescription').controls; let key = index;"
+                [formGroupName]="key">
                 <div fxFlex="50px" class="no">{{key + 1}}</div>
                 <mat-input-container fxFlex="20%">
                     <input matInput formControlName="medicine">
@@ -86,7 +107,7 @@
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <div fxFlex="67%"></div>
             <div fxFlex="33%" class="text-right">
-                <a mat-raised-button routerLink="/app/patient/report/{{patientId}}">Cancel</a>
+                <a mat-raised-button (click)="goToState('/app/patient/report/' + patientId)">Cancel</a>
                 <button mat-raised-button class="mat-primary" type="submit">Save</button>
             </div>
         </div>

@@ -70,7 +70,7 @@ const HomeRoutes: Routes = [
                     { path: 'list', component: PatientListComponent },
                     { path: 'details/:id', component: PatientDetailsComponent, canDeactivate: [CanDeactivateGuard] },
                     { path: 'report/:id', component: PatientReportComponent },
-                    { path: 'checkup/:patientId/:id', component: PatientCheckupComponent }
+                    { path: 'checkup/:patientId/:id', component: PatientCheckupComponent, canDeactivate: [CanDeactivateGuard]}
                 ]
             },
             {
