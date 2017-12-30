@@ -93,6 +93,7 @@ export class PatientCheckupComponent {
 
     setCheckupForm(checkup: any) {
         this.checkupForm.patchValue({
+            _id: checkup._id,
             doctorName: checkup.doctorName,
             checkupDate: checkup.checkupDate,
             symptoms: checkup.symptoms,
@@ -112,7 +113,6 @@ export class PatientCheckupComponent {
                 this.toState = '/app/patient/checkup/' + this.patientId + '/' + this.checkupForm.value._id;
             this.isCancel = true;
             this.alertSuccess('Created successfully');
-            //this.router.navigate(['/app/patient/checkup/' + this.patientId + '/' + this.checkupForm.value._id]);
         });
     }
 
