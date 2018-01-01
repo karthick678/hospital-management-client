@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ModelDialogComponent } from './../../shared/model-dialog/model-dialog.component';
 import { Checkup } from '../shared/checkup.model';
 import { PatientCheckupComponentService } from './patient.checkup.service';
+import { MedicineStockComponentService } from './../../medicine/stock/medicine.stock.service';
 import { FlashMessageService } from './../../shared/flash-message/flash-message.service';
 import { Doctor } from './../../doctor/shared/doctor.model';
 import { DoctorDetailsService } from './../../doctor/details/doctor.details.service';
@@ -17,7 +18,7 @@ import 'rxjs/add/operator/startWith';
     selector: 'patient-checkup',
     templateUrl: './patient.checkup.component.html',
     styleUrls: ['./patient.checkup.component.scss'],
-    providers: [PatientCheckupComponentService, DoctorDetailsService]
+    providers: [PatientCheckupComponentService, DoctorDetailsService, MedicineStockComponentService]
 })
 
 export class PatientCheckupComponent {
@@ -27,6 +28,7 @@ export class PatientCheckupComponent {
     toState: string;
     patientId: string;
     doctorList: any;
+    medicineList: any[] = [];
     whenToTakeList = [{ viewValue: '-- select --', value: '' }, { viewValue: '1-1-1', value: '1-1-1' }, { viewValue: '1-0-1', value: '1-0-1' }, { viewValue: '0-0-1', value: '0-0-1' }, { viewValue: '0-1-0', value: '0-1-0' }, { viewValue: '1-0-0', value: '1-0-0' }];
     diagnosisName: string;
     checkupForm: FormGroup;
@@ -38,13 +40,14 @@ export class PatientCheckupComponent {
     };
     formSubmitAttempt: boolean = false;
 
-    constructor(private flashMessageService: FlashMessageService, private router: Router, private activatedRoute: ActivatedRoute, private patientCheckupComponentService: PatientCheckupComponentService, private formBuilder: FormBuilder, private doctorDetailsService: DoctorDetailsService, public matDialog: MatDialog) {
+    constructor(private flashMessageService: FlashMessageService, private router: Router, private activatedRoute: ActivatedRoute, private patientCheckupComponentService: PatientCheckupComponentService, private formBuilder: FormBuilder, private medicineStockComponentService: MedicineStockComponentService, private doctorDetailsService: DoctorDetailsService, public matDialog: MatDialog) {
 
     }
 
     ngOnInit() {
         this.activatedRoute.params.subscribe((params: Params) => {
             this.buildForm();
+            this.getAllMedicines();
             this.id = this.activatedRoute.snapshot.params['id'];
             this.patientId = this.activatedRoute.snapshot.params['patientId'];
             this.checkupForm.setValue(this.patientCheckupComponentService.sampleCheckup());
@@ -117,21 +120,27 @@ export class PatientCheckupComponent {
     }
 
     updateCheckupDetails() {
-        this.patientCheckupComponentService.updatePatientDetails(this.checkupForm.value).subscribe(checkup => {
-            this.checkupForm.patchValue(checkup);
-            this.alertSuccess('Updated successfully');
-            this.checkupForm.markAsPristine();
-        });
+        if (this.checkupForm.dirty) {
+            this.patientCheckupComponentService.updatePatientDetails(this.checkupForm.value).subscribe(checkup => {
+                this.checkupForm.patchValue(checkup);
+                this.alertSuccess('Updated successfully');
+                this.checkupForm.markAsPristine();
+            });
+        } else {
+            this.alertError();
+        }
     }
 
     deletePrescriptions(index: number) {
         const prescription = <FormArray>this.checkupForm.get('prescription');
         prescription.removeAt(index);
+        this.checkupForm.markAsDirty();
     }
 
     addPrescriptions(data: any) {
         const prescription = <FormArray>this.checkupForm.get('prescription');
         prescription.push(this.createPrescription(data));
+        this.checkupForm.markAsDirty();
     }
 
     buildForm() {
@@ -144,6 +153,16 @@ export class PatientCheckupComponent {
             diagnosis: ['', Validators.compose([Validators.required])],
             prescription: this.formBuilder.array([]),
             extraNotes: ''
+        });
+    }
+
+    getAllMedicines() {
+        let searchQuery = {
+            status: true
+        };
+        this.medicineStockComponentService.getAllMedicines(searchQuery).subscribe(medicines => {
+            this.medicineList = medicines;
+            this.medicineList.unshift({ name: '-- select --', _id: '' });
         });
     }
 
@@ -188,6 +207,13 @@ export class PatientCheckupComponent {
             this.router.navigate([this.toState]);
         else
             this.toState = '';
+    }
+
+    alertError() {
+        this.flashMessageService.show('Please update a field to save the page content', {
+            classes: ['error'],
+            timeout: this.dismiss
+        });
     }
 
     goToState(state: string) {

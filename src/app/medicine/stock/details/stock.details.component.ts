@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { StockDetailsService } from './stock.details.service';
+import { MedicineCategoryComponentService } from './../../category/medicine.category.service';
 import { Stock } from './../../shared/stock.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ModelDialogComponent } from './../../../shared/model-dialog/model-dialog.component';
@@ -13,7 +14,7 @@ import { AppSettings } from './../../../app.settings';
     selector: 'stock-details',
     templateUrl: './stock.details.component.html',
     styleUrls: ['./stock.details.component.scss'],
-    providers: [StockDetailsService]
+    providers: [StockDetailsService, MedicineCategoryComponentService]
 })
 
 export class StockDetailsComponent {
@@ -22,11 +23,11 @@ export class StockDetailsComponent {
     id: string;
     formSubmitAttempt: boolean = false;
     stockName: string;
-    categoriesList = [{ name: 'Analgesico', value: 'Analgesico' }];
     stockForm: FormGroup;
     isCancel: boolean = false;
+    categoryList: any[];
 
-    constructor(private flashMessageService: FlashMessageService, private stockDetailsService: StockDetailsService, private activatedRoute: ActivatedRoute, private router: Router, public matDialog: MatDialog, private formBuilder: FormBuilder) {
+    constructor(private medicineCategoryComponentService: MedicineCategoryComponentService, private flashMessageService: FlashMessageService, private stockDetailsService: StockDetailsService, private activatedRoute: ActivatedRoute, private router: Router, public matDialog: MatDialog, private formBuilder: FormBuilder) {
     }
 
     ngOnInit() {
@@ -105,6 +106,7 @@ export class StockDetailsComponent {
     }
 
     buildForm() {
+        this.getAllCategories();
         this.stockForm = this.formBuilder.group({
             _id: '',
             name: ['', Validators.compose([Validators.required])],
@@ -167,6 +169,16 @@ export class StockDetailsComponent {
             data: {
                 message: 'You have entered a name that already exists. Only unique name is allowed'
             }
+        });
+    }
+
+    getAllCategories() {
+        let searchQuery = {
+            status: true
+        };
+        this.medicineCategoryComponentService.getAllCategories(searchQuery).subscribe(categories => {
+            this.categoryList = categories;
+            this.categoryList.unshift({ name: '-- select --', _id: '' });
         });
     }
 

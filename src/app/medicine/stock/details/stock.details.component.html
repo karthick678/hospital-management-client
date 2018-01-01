@@ -41,12 +41,11 @@
                     </div>
                     <div fxFlex="33%">
                         <mat-form-field class="width-100">
-                            <input type="text" placeholder="Category" matInput  [matAutocomplete]="auto" formControlName="category">
-                            <mat-autocomplete placeholder="Category" #auto="matAutocomplete">
-                                <mat-option *ngFor="let category of categoriesList" [value]="category.value">
-                                    {{ category.name }}
+                            <mat-select placeholder="Category" formControlName="category" name="category">
+                                <mat-option *ngFor="let item of categoryList" [value]="item._id">
+                                    {{ item.name }} <span *ngIf="item.qty">({{item.qty}})</span>
                                 </mat-option>
-                            </mat-autocomplete>
+                            </mat-select>
                         </mat-form-field>
                         <div *ngIf="stockForm.controls['category'].invalid && (stockForm.controls['category'].dirty || stockForm.controls['category'].touched || formSubmitAttempt)"
                             class="alert-danger">

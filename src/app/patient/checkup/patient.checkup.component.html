@@ -68,9 +68,13 @@
             <div fxLayout fxLayout.xs="column" fxLayoutGap="10px" *ngFor="let item of checkupForm.get('prescription').controls; let key = index;"
                 [formGroupName]="key">
                 <div fxFlex="50px" class="no">{{key + 1}}</div>
-                <mat-input-container fxFlex="20%">
-                    <input matInput formControlName="medicine">
-                </mat-input-container>
+                <mat-form-field fxFlex="20%">
+                    <mat-select formControlName="medicine" name="medicine">
+                        <mat-option *ngFor="let item of medicineList" [value]="item._id">
+                            {{ item.name }} <span *ngIf="item.qty">({{item.qty}})</span>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
                 <mat-input-container fxFlex="20%">
                     <input matInput formControlName="noOfDays">
                 </mat-input-container>

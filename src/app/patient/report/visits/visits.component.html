@@ -56,7 +56,8 @@
                 <div class="timeline-item">
                     <h4 class="timeline-header">Prescription</h4>
                     <div class="timeline-body">
-                        <table>
+                        <div *ngIf="row.prescription.length === 0">No data to display</div>
+                        <table *ngIf="row.prescription.length">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -86,8 +87,11 @@
                 <mat-icon class="timeline-icon">event_note</mat-icon>
                 <div class="timeline-item extra-note">
                     <h4 class="timeline-header">Extra Note</h4>
-                    <div class="timeline-body">
+                    <div class="timeline-body" *ngIf="row.extraNotes !== ''">
                         {{row.extraNotes}}
+                    </div>
+                    <div class="timeline-body" *ngIf="row.extraNotes === ''">
+                        No data to display
                     </div>
                 </div>
             </li>
