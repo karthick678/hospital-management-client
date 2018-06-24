@@ -15,7 +15,7 @@
         <h4>Checkup</h4>
         <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
             <mat-form-field fxFlex="33%">
-                <mat-select placeholder="Doctor" formControlName="doctorName" required>
+                <mat-select placeholder="Doctor" formControlName="doctorId" required>
                     <mat-option *ngFor="let doctor of doctorList" [value]="doctor.value">
                         {{ doctor.name }}
                     </mat-option>
@@ -27,9 +27,9 @@
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
         </div>
-        <div *ngIf="checkupForm.controls['doctorName'].invalid && (checkupForm.controls['doctorName'].dirty || checkupForm.controls['doctorName'].touched || formSubmitAttempt)"
+        <div *ngIf="checkupForm.controls['doctorId'].invalid && (checkupForm.controls['doctorId'].dirty || checkupForm.controls['doctorId'].touched || formSubmitAttempt)"
             class="alert-danger">
-            <div *ngIf="checkupForm.controls['doctorName'].errors.required">
+            <div *ngIf="checkupForm.controls['doctorId'].errors.required">
                 Doctor is required
             </div>
         </div>
@@ -69,7 +69,7 @@
                 [formGroupName]="key">
                 <div fxFlex="50px" class="no">{{key + 1}}</div>
                 <mat-form-field fxFlex="20%">
-                    <mat-select formControlName="medicine" name="medicine">
+                    <mat-select formControlName="stockId" name="stockId">
                         <mat-option *ngFor="let item of medicineList" [value]="item._id">
                             {{ item.name }} <span *ngIf="item.qty">({{item.qty}})</span>
                         </mat-option>

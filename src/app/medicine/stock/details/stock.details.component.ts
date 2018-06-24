@@ -90,7 +90,11 @@ export class StockDetailsComponent {
     }
 
     deleteConfirm() {
-        let matDialog = this.matDialog.open(ModelDialogComponent);
+        let matDialog = this.matDialog.open(ModelDialogComponent, {
+            data: {
+                type: 'delete'
+            }
+        });
         matDialog.afterClosed().subscribe(isDelete => {
             if (isDelete) {
                 this.deleteStock();

@@ -37,13 +37,15 @@
                 <ngx-datatable-column name="Name">
                     <ng-template let-row="row" ngx-datatable-cell-template>
                         <a class="atag" routerLink="/app/medicine/stock/details/{{row._id}}" title="{{row.name}}">
-                    {{row.name}}
-                </a>
+                            {{row.name}}
+                        </a>
                     </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Category">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                        {{row.category}}
+                        <a class="atag" routerLink="/app/medicine/category/details/{{row.category._id}}" title="{{row.name}}"> 
+                            {{row.category.name}}
+                        </a>
                     </ng-template>
                 </ngx-datatable-column>
                 <ngx-datatable-column name="Price">

@@ -33,7 +33,7 @@ export class PatientCheckupComponent {
     diagnosisName: string;
     checkupForm: FormGroup;
     defaultPrescription = {
-        medicine: '',
+        stockId: '',
         noOfDays: 0,
         whenToTake: '',
         beforeMeal: false,
@@ -97,7 +97,7 @@ export class PatientCheckupComponent {
     setCheckupForm(checkup: any) {
         this.checkupForm.patchValue({
             _id: checkup._id,
-            doctorName: checkup.doctorName,
+            doctorId: checkup.doctorId,
             checkupDate: checkup.checkupDate,
             symptoms: checkup.symptoms,
             diagnosis: checkup.diagnosis,
@@ -147,7 +147,7 @@ export class PatientCheckupComponent {
         this.checkupForm = this.formBuilder.group({
             _id: '',
             patientId: '',
-            doctorName: '',
+            doctorId: '',
             checkupDate: new Date(),
             symptoms: ['', Validators.compose([Validators.required])],
             diagnosis: ['', Validators.compose([Validators.required])],
@@ -168,7 +168,7 @@ export class PatientCheckupComponent {
 
     createPrescription(prescription: any): FormGroup {
         return this.formBuilder.group({
-            medicine: [prescription.medicine, Validators.compose([Validators.required])],
+            stockId: [prescription.stockId, Validators.compose([Validators.required])],
             noOfDays: prescription.noOfDays,
             whenToTake: [prescription.whenToTake, Validators.compose([Validators.required])],
             beforeMeal: prescription.beforeMeal

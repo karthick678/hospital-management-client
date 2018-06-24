@@ -26,10 +26,10 @@
                 {{row.checkupDate  | date: 'dd-MMM-yyyy'}} 
             </span>
                 <span>
-                Doctor : {{row.doctorName}}
+                Doctor : {{row.doctorId.name.first}}
             </span>
                 <span class="time-label-button">
-                <button mat-button routerLink="/app/patient/checkup/{{row.patientId}}/{{row._id}}"><mat-icon>edit</mat-icon></button>
+                <button mat-button routerLink="/app/patient/checkup/{{row.patientId._id}}/{{row._id}}"><mat-icon>edit</mat-icon></button>
                 <button mat-button (click)="openmatDialog(row)"><mat-icon>delete_forever</mat-icon></button>
             </span>
             </li>
@@ -70,7 +70,7 @@
                             <tbody>
                                 <tr *ngFor="let item of row.prescription; let key = index">
                                     <td>{{key + 1}}</td>
-                                    <td>{{item.medicine}}</td>
+                                    <td>{{item.stockId.name}}</td>
                                     <td>{{item.noOfDays}}</td>
                                     <td>{{item.whenToTake}}</td>
                                     <td>

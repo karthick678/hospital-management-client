@@ -47,17 +47,6 @@
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <div fxFlex="33%">
-                        <mat-input-container class="width-100">
-                            <input matInput placeholder="Email" formControlName="email" required>
-                        </mat-input-container>
-                        <div *ngIf="doctorForm.controls['email'].invalid && (doctorForm.controls['email'].dirty || doctorForm.controls['email'].touched || formSubmitAttempt)"
-                            class="alert-danger">
-                            <div *ngIf="doctorForm.controls['email'].errors.required">
-                                Email is required
-                            </div>
-                        </div>
-                    </div>
-                    <div fxFlex="33%">
                         <mat-form-field class="width-100">
                             <mat-select placeholder="Gender" class="field-gender width-100" formControlName="gender" required>
                                 <mat-option *ngFor="let list of genderList" [value]="list.value">
@@ -69,6 +58,17 @@
                             class="alert-danger">
                             <div *ngIf="doctorForm.controls['gender'].errors.required">
                                 Gender is required
+                            </div>
+                        </div>
+                    </div>
+                    <div fxFlex="33%">
+                        <mat-input-container class="width-100">
+                            <input matInput placeholder="Email" formControlName="email" required>
+                        </mat-input-container>
+                        <div *ngIf="doctorForm.controls['email'].invalid && (doctorForm.controls['email'].dirty || doctorForm.controls['email'].touched || formSubmitAttempt)"
+                            class="alert-danger">
+                            <div *ngIf="doctorForm.controls['email'].errors.required">
+                                Email is required
                             </div>
                         </div>
                     </div>
@@ -88,6 +88,12 @@
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">
                     <mat-input-container fxFlex="33%">
                         <input matInput placeholder="Home Phone" formControlName="phoneNumber">
+                    </mat-input-container>
+                    <mat-input-container fxFlex="33%">
+                        <input matInput placeholder="Qualification" formControlName="qualification">
+                    </mat-input-container>
+                    <mat-input-container fxFlex="33%">
+                        <input matInput placeholder="Specialist" formControlName="specialist">
                     </mat-input-container>
                 </div>
                 <div fxLayout fxLayout.xs="column" fxLayoutGap="10px">

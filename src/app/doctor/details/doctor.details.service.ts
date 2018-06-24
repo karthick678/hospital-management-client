@@ -25,13 +25,15 @@ export class DoctorDetailsService {
             gender: '',
             mobileNumber: '',
             phoneNumber: '',
+            qualification: '',
+            specialist: '',
             status: true
         };
         return doctor;
     }
 
     getAllDoctors(): Observable<Doctor> {
-        return this.http.get(AppSettings.API_ENDPOINT + '/getAllDoctors/')
+        return this.http.get(AppSettings.API_ENDPOINT + '/getAllDoctors')
             .map((res) => res.json());
     }
 

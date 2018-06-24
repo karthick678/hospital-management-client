@@ -37,7 +37,11 @@ export class PatientReportVisitComponent {
     }
 
     openmatDialog(row: Checkup) {
-        let matDialog = this.matDialog.open(ModelDialogComponent);
+        let matDialog = this.matDialog.open(ModelDialogComponent, {
+            data: {
+                type: 'delete'
+            }
+        });
         matDialog.afterClosed().subscribe(isDelete => {
             if (isDelete) {
                 this.deleteCheckup.emit(row);

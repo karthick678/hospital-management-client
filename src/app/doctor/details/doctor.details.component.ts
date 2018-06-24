@@ -67,7 +67,7 @@ export class DoctorDetailsComponent {
         this.doctorDetailsService.createDoctorDetails(this.doctorForm.value).subscribe(doctor => {
             this.doctorForm.patchValue(doctor);
             if (!this.toState)
-                this.toState = '/app/doctor/details/' + this.doctor._id;
+                this.toState = '/app/doctor/details/' + doctor._id;
             this.isCancel = true;
             this.alertSuccess('Created successfully');
         }, (error) => {
@@ -127,6 +127,8 @@ export class DoctorDetailsComponent {
             gender: ['', Validators.compose([Validators.required])],
             mobileNumber: ['', Validators.compose([Validators.required])],
             phoneNumber: '',
+            qualification: '',
+            specialist: '',
             status: ['', Validators.compose([Validators.required])]
         });
     }

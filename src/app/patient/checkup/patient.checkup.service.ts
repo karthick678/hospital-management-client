@@ -17,7 +17,7 @@ export class PatientCheckupComponentService {
         let checkup = {
             _id: '',
             patientId: '',
-            doctorName: '',
+            doctorId: '',
             checkupDate: new Date(),
             diagnosis: '',
             symptoms: '',

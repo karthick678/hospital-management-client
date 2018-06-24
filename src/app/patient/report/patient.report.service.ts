@@ -17,12 +17,12 @@ export class PatientReportService {
         let checkup = [{
             _id: '',
             patientId: '',
-            doctorName: '',
+            doctorId: '',
             symptoms: '',
             diagnosis: '',
             checkupDate: '',
             prescription: [{
-                medicine: '',
+                stockId: '',
                 noOfDays: 0,
                 whenToTake: '',
                 beforeMeal: false
